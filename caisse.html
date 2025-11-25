@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>Caisse APEL</title>
+		<!--<link rel="manifest" href="manifest.json">-->
+		<style>
+			button, .produits button, .ligne_produit button{
+				-webkit-touch-callout:none;
+				-webkit-user-select:none;
+				touch-action:manipulation;
+			}
+			
+			*, *::before, *::after{
+				font-size:inherit;
+				-webkit-text-size-adjust:100%;
+				text-size-adjust:100%;
+			}
+			
+			html{
+				font-size:18px;
+			}
+			
+			@media screen and (max-width:600px){
+				html{
+					font-size:20px !important;
+				}
+				
+				.produits{
+					grid-template-columns:repeat(2, 1fr) !important;
+				}
+			}
+			
+			body{
+				font-family:serif;
+				padding:20px;
+				background:#f4f4f4;
+				font-size:1rem;
+				-webkit-text-size-adjust:100%;
+				text-size-adjust:100%;
+			}
+			
+			h1{
+				text-align:center;
+			}
+			
+			h2{
+				text-align:center;
+			}
+			
+			h3{
+				text-align:center;
+				width:100%;
+				border:solid;
+				border-radius:10px;
+			}
+			
+			button{
+				padding:20px 10px;
+				font-size:1rem;
+				border-radius:10px;
+				cursor:pointer;
+				min-width:0;
+				transform:none !important;
+			}
+			
+			.produits{
+				display:grid;
+				grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+				gap:15px;
+				align-items:stretch;
+			}
+			
+			.produits button{
+				display:flex;
+				flex-direction:column;
+				align-items:center;
+				justify-content:space-between;
+				padding:10px 10px;
+				font-size:1rem;
+				border-radius:10px;
+				box-sizing:border-box;
+				min-width:0;
+			}
+			
+			.produits .produit_nom{
+				margin-bottom:2px;
+			}
+			
+			.produits .produit_icone{
+				width:80px;
+				height:80px;
+				object-fit:contain;
+				margin-bottom:2px;
+			}
+			
+			.produits, .panier{
+				margin:20px 0;
+			}
+			
+			.panier{
+				padding:15px;
+				background:#fff;
+			}
+			
+			.panier button{
+				width:100%;
+				margin:10px 0;
+			}
+			
+			.ligne_produit{
+				display:flex;
+				justify-content:space-between;
+				align-items:center;
+				margin-top:8px;
+			}
+			
+			.ligne_produit div{
+				display:flex;
+				gap:5px;
+			}
+			
+			.ligne_produit span{
+				display:flex;
+				flex-direction:column;
+				line-height:1.2;
+				font-size:1rem;
+				width:100%;
+			}
+			
+			.ligne_produit span.ligne_produit_total{
+				margin-left:10px;
+			}
+			
+			.ligne_produit button{
+				font-size:1.2rem;
+				padding:8px 10px;
+				border-radius:10px;
+				width:auto;
+				text-align:center;
+			}
+			
+			.ligne_produit button.moins{
+				background:#d9534f;
+				color:white;
+			}
+			
+			.ligne_produit button.plus{
+				background:#4caf50;
+				color:white;
+			}
+			
+			.historique{
+				padding:15px;
+				background:#fff;
+			}
+			
+			.ligne_commande{
+				margin:2px 0;
+				padding:5px;
+			}
+			
+			.historique button{
+				width:100%;
+				margin:10px 0;
+			}
+			
+			.bas_de_page button{
+				width:100%;
+				margin:10px 0;
+			}
+			
+			/* --- Popup --- */
+			.popup{
+				display:none;
+				position:fixed;
+				top:0;
+				left:0;
+				right:0;
+				bottom:0;
+				background:rgba(0,0,0,0.5);
+				justify-content:center;
+				align-items:center;
+				z-index:1000;
+			}
+			
+			.popup-contenu{
+				background:white;
+				padding:20px;
+				border-radius:10px;
+				width:80%;
+				max-width:300px;
+				text-align:center;
+				font-size:1rem;
+			}
+			
+			.popup-boutons{
+				margin-top:20px;
+				display:flex;
+				justify-content:space-around;
+			}
+			
+			.popup-boutons button{
+				padding:10px 15px;
+				border:none;
+				border-radius:8px;
+				font-size:1rem;
+				cursor:pointer;
+			}
+			
+			.popup-boutons .danger{
+				background-color:#d9534f;
+				color:white;
+			}
+			
+			/* MODE NUIT */
+			body.mode_nuit{
+				background:#121212;
+				color:#e5e5e5;
+			}
+			
+			.mode_nuit button{
+				color:#fff !important;
+			}
+			
+			.mode_nuit .panier{
+				background:#1e1e1e;
+			}
+			
+			.mode_nuit .historique{
+				background:#1e1e1e;
+			}
+			
+			.mode_nuit .popup-contenu{
+				background:#1e1e1e;
+				color: white;
+			}
+			
+			.mode_nuit .produits button{
+				background:#2a2a2a;
+				color:#fff;
+			}
+			
+			.mode_nuit .ligne_produit{
+				color:#ddd;
+			}
+			
+			.mode_nuit #boutonModeNuit{
+				background:#2a2a2a;
+				color:#fff;
+			}
+			
+			button:hover{
+				filter:brightness(1.15);
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Caisse APEL</h1>
+		<h3>Alimentation</h3>
+		<div class="produits" id="liste_produits_1">
+		</div>
+		<h3>Autre</h3>
+		<div class="produits" id="liste_produits_2">
+		</div>
+		<div class="panier">
+			<h2>Panier</h2>
+			<div id="panier">
+			</div>
+			<h3>Total : <span id="total">0.00</span> €</h3>
+			<button onclick="validerPanier()" style="background:#4caf50;color:white;">Valider le panier</button>
+			<button onclick="ouvrirPopupViderCommande()" style="background:#d9534f;color:white;">Vider le panier</button>
+			<!-- Popup de confirmation -->
+			<div id="popup_vider_commande" class="popup">
+				<div class="popup-contenu">
+					<p>Voulez-vous annuler supprimer cette commande ?</p>
+					<div class="popup-boutons">
+						<button onclick="confirmerSuppressionPanier()" class="danger">Oui, annuler</button>
+						<button onclick="fermerPopupViderCommande()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="historique">
+			<h2>Historique des commandes</h2>
+			<div id="historique">
+			</div>
+			<button onclick="exporterCommandesHistorique()" style="background:#1565C0;color:white;">Exporter l'historique</button>
+			<button onclick="ouvrirPopupViderDerniereCommandeHistorique()" style="background:#FF9800;color:white;">Annuler la dernière commande</button>
+			<button onclick="ouvrirPopupViderHistorique()" style="background:#d9534f;color:white;">Vider l'historique</button>
+			<!-- Popups de confirmation -->
+			<div id="popup_vider_derniere_commande_historique" class="popup">
+				<div class="popup-contenu">
+					<p>Voulez-vous vraiment supprimer la dernière commande ?</p>
+					<div class="popup-boutons">
+						<button onclick="confirmerSuppressionDerniereCommandeHistorique()" class="danger">Oui, supprimer</button>
+						<button onclick="fermerPopupViderDerniereCommandeHistorique()">Annuler</button>
+					</div>
+				</div>
+			</div>
+			<div id="popup_vider_historique" class="popup">
+				<div class="popup-contenu">
+					<p>Voulez-vous vraiment supprimer tout l'historique ?</p>
+					<div class="popup-boutons">
+						<button onclick="confirmerSuppressionHistorique()" class="danger">Oui, supprimer</button>
+						<button onclick="fermerPopupViderHistorique()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="historique">
+			<h2>Récapitulatif des ventes</h2>
+			<div id="recapitulatifProduits"></div>
+			<h3>Total encaissé : <span id="totalCumule">0</span> €</h3>
+			<button onclick="exporterRecapitulatifHistorique()" style="background:#1565C0;color:white;">Exporter le récapitulatif</button>
+		</div>
+		<div class="bas_de_page">
+			<button onclick="changerModeJourNuit()" id="boutonModeNuit">Mode nuit</button>
+		</div>
+		<script>
+			/*** Création des variables et constantes ***/
+			
+			// Le panier en cours
+			let panier = {};
+			
+			// L'historique des commandes
+			let historique = JSON.parse(localStorage.getItem('historique') || '[]');
+			
+			// Les produits avec les prix
+			// Alimentaire
+			const objetProduits1 = {
+				"Café" : {
+					prix : 2,
+					image : "cafe.png"
+				},
+				"Crêpe caramel" : {
+					prix : 2,
+					image : "crepe_caramel.png"
+				},
+				"Crêpe chocolat" : {
+					prix : 2,
+					image : "crepe_chocolat.png"
+				},
+				"Crêpe sucre" : {
+					prix : 1,
+					image : "crepe_sucre.png"
+				},
+				"Gâteau" : {
+					prix : 1,
+					image : "gateau.png"
+				},
+				"Thé" : {
+					prix : 2,
+					image : "the.png"
+				},
+				"Vin chaud" : {
+					prix : 3,
+					image : "vin_chaud.png"
+				}
+			};
+			// Autre
+			const objetProduits2 = {
+				"Jacinthe" : {
+					prix : 5,
+					image : "jacinthe.png"
+				}
+			};
+			
+			/*** Affichages dynamiques ***/
+			
+			// Génération des boutons pour ajouter des produits au panier en cours
+			genererBoutonsProduits(objetProduits1, "liste_produits_1");
+			genererBoutonsProduits(objetProduits2, "liste_produits_2");
+			
+			// Affichage de l'historique des commandes
+			afficherHistorique();
+			
+			// Charger les préférences
+			if (localStorage.getItem("modeNuit") === "true"){
+				document.body.classList.add("mode_nuit");
+				document.getElementById("boutonModeNuit").textContent = "Mode jour";
+			}
+			
+			/*** Fonctions ***/
+			
+			/** Éviter les clics intempestifs **/
+			
+			let deniere_action = 0;
+			const DELAI_MINIMUM = 150;
+			
+			function clicEstAutorise(){
+				const maintenant = Date.now();
+				if(maintenant - deniere_action < DELAI_MINIMUM){
+					return false;
+				}
+				deniere_action = maintenant;
+				return true;
+			}
+			
+			/** Panier **/
+			
+			// Générer les boutons permettant d'ajouter un produit au panier
+			function genererBoutonsProduits(objet_produits, id_produits){
+				const div = document.getElementById(id_produits);
+				div.innerHTML = "";
+				
+				for(const nom in objet_produits){
+					const bouton = document.createElement("button");
+					bouton.textContent = `${nom} - ${objet_produits[nom].prix}€`;
+					bouton.innerHTML = `<span class="produit_nom">${nom}</span><img src="images/${objet_produits[nom].image}" alt="" class="produit_icone" />${objet_produits[nom].prix} €`;
+					bouton.addEventListener('click', function(){
+						ajouterProduit(nom, objet_produits[nom].prix);
+					});
+					
+					div.appendChild(bouton);
+				}
+			}
+			
+			// Ajouter un nouvel article
+			function ajouterProduit(nom, prix){
+				if (!panier[nom]){
+					panier[nom] = {
+						quantite: 0,
+						prix: prix
+					};
+				}
+				panier[nom].quantite++;
+				afficherPanier();
+			}
+			
+			// Diminuer la quantité d'un article
+			function diminuerQuantiteProduit(nom){
+				if (!panier[nom]){
+					return;
+				}
+				panier[nom].quantite--;
+				if(panier[nom].quantite <= 0){
+					delete panier[nom];
+				}
+				afficherPanier();
+			}
+			
+			// Augmenter la quantité d'un article
+			function augmenterQuantiteProduit(nom){
+				panier[nom].quantite++;
+				afficherPanier();
+			}
+			
+			// Mettre l'affichage du panier à jour
+			function afficherPanier(){
+				const divPanier = document.getElementById('panier');
+				divPanier.innerHTML = '';
+				let total = 0;
+				
+				for(let produit in panier){
+					const ligne = document.createElement('div');
+					ligne.className = 'ligne_produit';
+					const soustotal = panier[produit].quantite * panier[produit].prix;
+					total += soustotal;
+					const texte = document.createElement('span');
+					texte.innerHTML = `
+						<span>
+							${panier[produit].quantite}x ${produit}
+						</span>
+						<span class="ligne_produit_total">
+							= ${soustotal.toFixed(2)}€
+						</span>
+					`;
+					const boutons = document.createElement('div');
+					const bouton_moins = document.createElement('button');
+					bouton_moins.className = "moins";
+					bouton_moins.type = "button";
+					bouton_moins.textContent = "-";
+					bouton_moins.addEventListener('click', function(){
+						if(!clicEstAutorise()){
+							return;
+						}
+						diminuerQuantiteProduit(produit);
+					});
+					boutons.appendChild(bouton_moins);
+					const bouton_plus = document.createElement('button');
+					bouton_plus.className = "plus";
+					bouton_plus.type = "button";
+					bouton_plus.textContent = "+";
+					bouton_plus.addEventListener('click', function(){
+						if(!clicEstAutorise()){
+							return;
+						}
+						augmenterQuantiteProduit(produit);
+					});
+					boutons.appendChild(bouton_plus);
+					ligne.appendChild(texte);
+					ligne.appendChild(boutons);
+					divPanier.appendChild(ligne);
+				}
+				
+				document.getElementById('total').textContent = total.toFixed(2);
+			}
+			
+			// Valider le panier en cours
+			function validerPanier(){
+				if (Object.keys(panier).length === 0) return;
+				
+				const commande = {
+					id: historique.length + 1,
+					produits: JSON.parse(JSON.stringify(panier)),
+					total: parseFloat(document.getElementById('total').textContent),
+					temps: new Date().toLocaleTimeString('fr-FR')
+				};
+				
+				historique.unshift(commande);
+				sauvegarderHistorique();
+				afficherHistorique();
+				panier = {};
+				afficherPanier();
+			}
+			
+			// Annuler le panier en cours
+			function confirmerSuppressionPanier(){
+				// Suppression
+				panier = {};
+				afficherPanier();
+				// Fermer la popup
+				fermerPopupViderCommande();
+			}
+			
+			/** Commande **/
+			
+			// Afficher le détail des produits d'une commande
+			function afficherDetailCommande(liste_produits){
+				return Object.entries(liste_produits)
+					.map(([nom, informations]) => `${informations.quantite}x ${nom}`)
+					.join(", ");
+			}
+			
+			/** Historique **/
+			
+			// Afficher l'historique des commandes
+			function afficherHistorique(){
+				const divHistorique = document.getElementById('historique');
+				divHistorique.innerHTML = '';
+				
+				historique.forEach(commande => {
+					const ligne = document.createElement('div');
+					ligne.className = 'ligne_commande';
+					const details = afficherDetailCommande(commande.produits);
+					ligne.innerHTML = `<b>Commande #${commande.id}</b> — ${commande.total.toFixed(2)}€ — ${commande.temps} (${details})`;
+					divHistorique.appendChild(ligne);
+				});
+				
+				// Affichage du récapitulatif
+				const recapitulatif = calculerRecapitulatifProduitsHistorique();
+				let texte_recapitulatif = "<h4>Alimentation</h4>";
+				Object.entries(recapitulatif).forEach(([nom, quantite]) => {
+					if(nom === Object.keys(objetProduits2)[0]){
+						texte_recapitulatif += `<h4>Autre</h4>`;
+					}
+					texte_recapitulatif += `${nom} : ${quantite}<br />`;
+				});
+				
+				document.getElementById("recapitulatifProduits").innerHTML = texte_recapitulatif;
+				document.getElementById("totalCumule").textContent = historique.reduce((somme, commande) => somme + commande.total, 0).toFixed(2);
+			}
+			
+			// Sauvegarder l'historique
+			function sauvegarderHistorique(){
+				localStorage.setItem('historique', JSON.stringify(historique));
+			}
+			
+			// Annuler la dernière commande de l'historique
+			function confirmerSuppressionDerniereCommandeHistorique(){
+				if(historique.length ===0){
+					fermerPopupViderDerniereCommandeHistorique();
+					return;
+				}
+				// Suppression
+				historique.shift();
+				sauvegarderHistorique();
+				afficherHistorique();
+				// Fermer la popup
+				fermerPopupViderDerniereCommandeHistorique();
+			}
+			
+			// Vider l'historique
+			function confirmerSuppressionHistorique(){
+				// Suppression
+				localStorage.removeItem("historique");
+				historique = [];
+				afficherHistorique();
+				// Fermer la popup
+				fermerPopupViderHistorique();
+			}
+			
+			// Création du récapitulatif des produits de l'historique
+			function calculerRecapitulatifProduitsHistorique(){
+				const recapitulatif = {};
+				
+				for(let nom in objetProduits1){
+					recapitulatif[nom] = 0;
+				}
+				
+				for(let nom in objetProduits2){
+					recapitulatif[nom] = 0;
+				}
+				
+				historique.forEach(commande => {
+					Object.entries(commande.produits).forEach(([nom, info]) => {
+						recapitulatif[nom] += info.quantite;
+					});
+				});
+				
+				return recapitulatif;
+			}
+			
+			/** Popups **/
+			
+			// Ouverture du popup pour annuler le panier en cours
+			function ouvrirPopupViderCommande(){
+				if (Object.keys(panier).length === 0){
+					alert("Le panier est vide !");
+					return;
+				}
+				document.getElementById("popup_vider_commande").style.display = "flex";
+			}
+			
+			// Fermeture du popup pour annuler le panier en cours
+			function fermerPopupViderCommande(){
+				document.getElementById("popup_vider_commande").style.display = "none";
+			}
+			
+			// Ouverture du popup pour annuler la dernière commande de l'historique
+			function ouvrirPopupViderDerniereCommandeHistorique(){
+				if(!historique || historique.length === 0){
+					alert("L'historique est vide !");
+					return;
+				}
+				document.getElementById("popup_vider_derniere_commande_historique").style.display = "flex";
+			}
+			
+			// Fermeture du popup pour annuler la dernière commande de l'historique
+			function fermerPopupViderDerniereCommandeHistorique(){
+				document.getElementById("popup_vider_derniere_commande_historique").style.display = "none";
+			}
+			
+			// Ouverture du popup pour vider l'historique
+			function ouvrirPopupViderHistorique(){
+				if(!historique || historique.length === 0){
+					alert("L'historique est vide !");
+					return;
+				}
+				document.getElementById("popup_vider_historique").style.display = "flex";
+			}
+			
+			// Fermeture du popup pour vider l'historique
+			function fermerPopupViderHistorique(){
+				document.getElementById("popup_vider_historique").style.display = "none";
+			}
+			
+			/** CSV **/
+			
+			// Exporter les commandes de l'historique
+			function exporterCommandesHistorique()
+			{
+				if(!historique || historique.length === 0){
+					alert("Aucune donnée à exporter !");
+					return;
+				}
+				
+				// En-têtes CSV
+				let csvContenu = "Commande;Montant;Heure;Détails\n";
+				
+				historique.forEach(commande => {
+					const details = afficherDetailCommande(commande.produits);
+					csvContenu += `${commande.id};${commande.total};${commande.temps};${details}\n`;
+				});
+				
+				telechargerCSV("historique", csvContenu);
+			}
+			
+			// Exporter le récapitulatif de l'historique
+			function exporterRecapitulatifHistorique()
+			{
+				if(!historique || historique.length === 0){
+					alert("Aucune donnée à exporter !");
+					return;
+				}
+				
+				// En-têtes CSV
+				let csvContenu = "Produit;Quantité totale;Prix Unitaire;Total\n";
+				
+				const recapitulatif = calculerRecapitulatifProduitsHistorique();
+				
+				Object.entries(recapitulatif).forEach(([nom, quantite]) => {
+					csvContenu += `${nom};${quantite};;\n`;
+				});
+				
+				// Création du fichier
+				telechargerCSV("recapitulatif", csvContenu);
+			}
+			
+			// Télécharger les fichiers CSV
+			function telechargerCSV(nomFichier, contenuFichier){
+				const BOM = "\uFEFF";
+				const blob = new Blob([BOM + contenuFichier], { type: "text/csv;charset=utf-8;" });
+				const url = URL.createObjectURL(blob);
+				
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = nomFichier+".csv";
+				a.click();
+				
+				URL.revokeObjectURL(url);
+			}
+			
+			/** Gestion du mode jour/nuit **/
+			
+			// Changer de mode jour ou nuit en fonction de l'état actuel
+			function changerModeJourNuit(){
+				const body = document.body;
+				const bouton = document.getElementById("boutonModeNuit");
+				
+				body.classList.toggle("mode_nuit");
+				
+				const isDark = body.classList.contains("mode_nuit");
+				localStorage.setItem("modeNuit", isDark);
+				
+				bouton.textContent = isDark ? "Mode jour" : "Mode nuit";
+			}
+		</script>
+	</body>
+</html>
