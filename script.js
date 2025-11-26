@@ -13,6 +13,10 @@ const objetProduits1 = {
 		prix : 2,
 		image : "cafe.png"
 	},
+	"Chocolat" : {
+		prix : 1,
+		image : "chocolat.png"
+	},
 	"Crêpe caramel" : {
 		prix : 2,
 		image : "crepe_caramel.png"
@@ -28,6 +32,14 @@ const objetProduits1 = {
 	"Gâteau" : {
 		prix : 1,
 		image : "gateau.png"
+	},
+	"Pâte de fruits" : {
+		prix : 1,
+		image : "pate_de_fruits.png"
+	},
+	"Sablé" : {
+		prix : 1.5,
+		image : "sable.png"
 	},
 	"Thé" : {
 		prix : 2,
@@ -48,9 +60,17 @@ const objetProduits2 = {
 		prix : 5,
 		image : "bougie.png"
 	},
+	"Carte de voeux" : {
+		prix : 1,
+		image : "carte_de_voeux.png"
+	},
 	"Décoration" : {
 		prix : 5,
 		image : "decoration.png"
+	},
+	"Divers" : {
+		prix : 1,
+		image : "divers.png"
 	},
 	"Jacinthe" : {
 		prix : 5,
