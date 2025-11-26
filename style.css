@@ -8,6 +8,7 @@ button, .produits button, .ligne_produit button{
 	font-size:inherit;
 	-webkit-text-size-adjust:100%;
 	text-size-adjust:100%;
+	box-sizing:border-box;
 }
 
 html{
@@ -59,36 +60,34 @@ button{
 
 .boutons_options{
 	display:flex;
-	justify-content:space-between;
-	align-items:center;
-	margin-bottom:20px;
 	gap:10px;
 	width:100%;
 }
 
 #bouton_retour, #bouton_mode_nuit{
+	flex:1;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	gap:8px;
 	padding:10px 15px;
-	font-size:1rem;
 	border-radius:8px;
-	width:auto;
-	margin:0 !important;
-	background:#1565C0;
+	background:#1665C0;
 	color:white !important;
 	border:none;
-	flex-grow:1;
 }
 
 #bouton_retour{
 	display:flex;
 	align-items:center;
-	justify-content:flex-start;
+	justify-content:center;
 	gap:8px;
 }
 
 #bouton_mode_nuit{
 	display:flex;
 	align-items:center;
-	justify-content:flex-end;
+	justify-content:center;
 	gap:8px;
 	width:auto;
 }
