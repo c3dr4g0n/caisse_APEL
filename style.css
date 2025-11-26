@@ -78,7 +78,7 @@ button{
 #bouton_retour{
 	display:flex;
 	align-items:center;
-	justify-content:felx-start;
+	justify-content:flex-start;
 	gap:8px;
 	margin-right:10px !important;
 }
@@ -86,7 +86,7 @@ button{
 #bouton_mode_nuit{
 	display:flex;
 	align-items:center;
-	justify-content:felx-end;
+	justify-content:flex-end;
 	gap:8px;
 	width:auto;
 }
