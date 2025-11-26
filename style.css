@@ -73,6 +73,7 @@ button{
 	background:#1565C0;
 	color:white !important;
 	border:none;
+	flex-grow:1;
 }
 
 #bouton_retour{
