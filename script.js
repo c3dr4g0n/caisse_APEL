@@ -390,24 +390,25 @@ function fermerPopupViderHistorique(){
 // Exporter les commandes de l'historique
 function exporterCommandesHistorique()
 {
-	// En-têtes CSV
 	let csvContenu = "Commande;Montant;Heure;Détails\n";
 	
 	historique.forEach(commande => {
 		const details = afficherDetailCommande(commande.produits);
-		csvContenu += `${commande.id};${commande.total};${commande.temps};${details}\n`;
+		const chaine_total = commande.total.toString().replace('.', ',');
+		csvContenu += `${commande.id};${chaine_total};${commande.temps};${details}\n`;
 	});
 	
-	telechargerCSV("historique", csvContenu);
+	return csvContenu;
 }
 
 // Exporter le récapitulatif de l'historique
 function exporterRecapitulatifHistorique()
 {
-	// En-têtes CSV
 	let csvContenu = "Produit;Quantité totale;Prix Unitaire;Total\n";
 	
 	const recapitulatif = calculerRecapitulatifProduitsHistorique();
+	let quantite_final = 0;
+	let total_final = 0;
 	
 	Object.entries(recapitulatif).forEach(([nom, quantite]) => {
 		let prix_unitaire = 0;
@@ -418,13 +419,35 @@ function exporterRecapitulatifHistorique()
 			prix_unitaire = objetProduits2[nom].prix;
 		}
 		
+		quantite_final += quantite;
 		let total_article = quantite * prix_unitaire;
+		total_final += total_article;
 		
-		csvContenu += `${nom};${quantite};${prix_unitaire.toFixed(2)};${total_article.toFixed(2)}\n`;
+		const chaine_prix = prix_unitaire.toString().replace('.', ',');
+		const chaine_total = total_article.toString().replace('.', ',');
+		
+		csvContenu += `${nom};${quantite};${chaine_prix};${chaine_total}\n`;
 	});
 	
-	// Création du fichier
-	telechargerCSV("recapitulatif", csvContenu);
+	const chaine_total = total_final.toString().replace('.', ',');
+	
+	csvContenu += `TOTAL;${quantite_final};;${chaine_total}\n`;
+	
+	return csvContenu;
+}
+
+// Exporter les commandes et le récapitulatif de l'historique
+function exporterRapport(){
+	if(!historique || historique.length === 0){
+		return;
+	}
+	
+	const csvCommandes = exporterCommandesHistorique();
+	const csvRecapitulatif = exporterRecapitulatifHistorique();
+	
+	const csvRapport = "*** Historique des commandes ***\n"+csvCommandes+"\n\n*** Récapitulatif des commandes ***\n"+csvRecapitulatif;
+	
+	telechargerCSV("rapport", csvRapport);
 }
 
 // Télécharger les fichiers CSV
@@ -439,25 +462,6 @@ function telechargerCSV(nomFichier, contenuFichier){
 	a.click();
 	
 	URL.revokeObjectURL(url);
-}
-
-function telechargerEtEnvoyerRapports(){
-	if(!historique || historique.length === 0){
-		return;
-	}
-	
-	exporterCommandesHistorique();
-	exporterRecapitulatifHistorique();
-	
-	const destinataire = "apelbrou@gmail.com";
-	const totalCumule = document.getElementById('totalCumule').textContent;
-	const objet = encodeURIComponent(`Rapports de Caisse APEL - ${new Date().toLocaleDateString('fr-FR')}`);
-	const corps = encodeURIComponent(`Bonjour,\n\nVeuillez trouver ci-joint les récapitulatifs des ventes de la caisse APEL de (votre NOM et Prénom) :\n\n- Historique des commandes.\n- Récapitulatif des produits vendus (total encaissé : ${totalCumule} €).\n\nMerci de coller les fichiers CSV téléchargés en pièces jointes de ce mail.\n\nCordialement.`);
-	const mailtoLink = `mailto:${destinataire}?subject=${objet}&body=${corps}`;
-	setTimeout(() => {
-		window.location.href = mailtoLink;
-		alert("Les fichiers CSV ont été téléchargés. Veuillez les joindre manuellement à votre mail.");
-	}, 500);
 }
 
 /** Gestion du mode jour/nuit **/
