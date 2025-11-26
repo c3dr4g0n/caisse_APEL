@@ -75,6 +75,10 @@ button{
 	border:none;
 }
 
+#bouton_retour{
+	margin-right:10px !important;
+}
+
 #bouton_retour span{
 	display:flex;
 	align-items:center;
