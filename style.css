@@ -76,19 +76,19 @@ button{
 }
 
 #bouton_retour{
+	display:flex;
+	align-items:center;
+	justify-content:felx-start;
+	gap:8px;
 	margin-right:10px !important;
 }
 
-#bouton_retour span{
+#bouton_mode_nuit{
 	display:flex;
 	align-items:center;
-	gap:5px;
-}
-
-#bouton_mode_nuit span{
-	display:flex;
-	align-items:center;
-	gap:5px;
+	justify-content:felx-end;
+	gap:8px;
+	width:auto;
 }
 
 .produits{

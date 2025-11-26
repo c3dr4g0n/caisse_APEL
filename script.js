@@ -63,10 +63,10 @@ afficherHistorique();
 // Charger les préférences
 if (localStorage.getItem("modeNuit") === "true"){
 	document.body.classList.add("mode_nuit");
-	document.getElementById("bouton_mode_nuit").innerHTML = '<span>Mode jour &#9728;</span>';
+	document.getElementById("bouton_mode_nuit").innerHTML = '<span class="bouton_mode_nuit_texte">Mode jour</span><span class="bouton_mode_nuit_icone">&#9728;</span>';
 }
 else{
-	document.getElementById("bouton_mode_nuit").innerHTML = '<span>Mode nuit &#9789; </span>';
+	document.getElementById("bouton_mode_nuit").innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
 }
 
 /*** Fonctions ***/
@@ -419,9 +419,9 @@ function changerModeJourNuit(){
 	localStorage.setItem("modeNuit", isDark);
 	
 	if(isDark){
-		bouton.innerHTML = '<span>Mode jour &#9728;</span>';
+		bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode jour</span><span class="bouton_mode_nuit_icone">&#9728;</span>';
 	}
 	else{
-		bouton.innerHTML = '<span>Mode nuit &#9789;</span>';
+		bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
 	}
 }
