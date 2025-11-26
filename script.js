@@ -33,8 +33,12 @@ const objetProduits1 = {
 		prix : 1,
 		image : "gateau.png"
 	},
+	"Guimauve" : {
+		prix : 2,
+		image : "guimauve.png"
+	},
 	"Pâte de fruits" : {
-		prix : 1,
+		prix : 2,
 		image : "pate_de_fruits.png"
 	},
 	"Sablé" : {
