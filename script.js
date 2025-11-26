@@ -390,7 +390,17 @@ function exporterRecapitulatifHistorique()
 	const recapitulatif = calculerRecapitulatifProduitsHistorique();
 	
 	Object.entries(recapitulatif).forEach(([nom, quantite]) => {
-		csvContenu += `${nom};${quantite};;\n`;
+		let prix_unitaire = 0;
+		if(objetProduits1[nom]){
+			prix_unitaire = objetProduits1[nom].prix;
+		}
+		else if(objetProduits2[nom]){
+			prix_unitaire = objetProduits2[nom].prix;
+		}
+		
+		let total_article = quantite * prix_unitaire;
+		
+		csvContenu += `${nom};${quantite};${prix_unitaire.toFixed(2)};${total_article.toFixed(2)}\n`;
 	});
 	
 	// Création du fichier
