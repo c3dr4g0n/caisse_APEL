@@ -40,9 +40,33 @@ const objetProduits1 = {
 };
 // Autre
 const objetProduits2 = {
+	"Bijou" : {
+		prix : 5,
+		image : "bijou.png"
+	},
+	"Bougie" : {
+		prix : 5,
+		image : "bougie.png"
+	},
+	"Décoration" : {
+		prix : 5,
+		image : "decoration.png"
+	},
 	"Jacinthe" : {
 		prix : 5,
 		image : "jacinthe.png"
+	},
+	"Marionnette DIY" : {
+		prix : 5,
+		image : "marionnette.png"
+	},
+	"Mug" : {
+		prix : 5,
+		image : "mug.png"
+	},
+	"Porte-clé" : {
+		prix : 5,
+		image : "porte_cle.png"
 	}
 };
 
