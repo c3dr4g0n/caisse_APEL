@@ -346,10 +346,6 @@ function fermerPopupViderHistorique(){
 // Exporter les commandes de l'historique
 function exporterCommandesHistorique()
 {
-	if(!historique || historique.length === 0){
-		return;
-	}
-	
 	// En-têtes CSV
 	let csvContenu = "Commande;Montant;Heure;Détails\n";
 	
@@ -364,10 +360,6 @@ function exporterCommandesHistorique()
 // Exporter le récapitulatif de l'historique
 function exporterRecapitulatifHistorique()
 {
-	if(!historique || historique.length === 0){
-		return;
-	}
-	
 	// En-têtes CSV
 	let csvContenu = "Produit;Quantité totale;Prix Unitaire;Total\n";
 	
@@ -396,6 +388,10 @@ function telechargerCSV(nomFichier, contenuFichier){
 }
 
 function telechargerEtEnvoyerRapports(){
+	if(!historique || historique.length === 0){
+		return;
+	}
+	
 	exporterCommandesHistorique();
 	exporterRecapitulatifHistorique();
 	
