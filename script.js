@@ -9,6 +9,10 @@ let historique = JSON.parse(localStorage.getItem('historique') || '[]');
 // Les produits avec les prix
 // Alimentaire
 const objetProduits1 = {
+	"Bonbon" : {
+		prix : 1,
+		image : "bonbon.png"
+	},
 	"Café" : {
 		prix : 2,
 		image : "cafe.png"
@@ -16,6 +20,10 @@ const objetProduits1 = {
 	"Chocolat" : {
 		prix : 1,
 		image : "chocolat.png"
+	},
+	"Chocolat chaud" : {
+		prix : 2,
+		image : "chocolat_chaud.png"
 	},
 	"Crêpe caramel" : {
 		prix : 2,
@@ -28,6 +36,10 @@ const objetProduits1 = {
 	"Crêpe sucre" : {
 		prix : 1,
 		image : "crepe_sucre.png"
+	},
+	"Cupcake" : {
+		prix : 2,
+		image : "cupcake.png"
 	},
 	"Gâteau" : {
 		prix : 1,
@@ -68,13 +80,33 @@ const objetProduits2 = {
 		prix : 1,
 		image : "carte_de_voeux.png"
 	},
+	"Chaussettes" : {
+		prix : 3,
+		image : "chaussettes.png"
+	},
 	"Décoration" : {
 		prix : 5,
 		image : "decoration.png"
 	},
-	"Divers" : {
+	"Divers 1" : {
 		prix : 1,
-		image : "divers.png"
+		image : "divers_1.png"
+	},
+	"Divers 2" : {
+		prix : 2,
+		image : "divers_2.png"
+	},
+	"Divers 3" : {
+		prix : 3,
+		image : "divers_3.png"
+	},
+	"Divers 4" : {
+		prix : 4,
+		image : "divers_4.png"
+	},
+	"Divers 5" : {
+		prix : 5,
+		image : "divers_5.png"
 	},
 	"Jacinthe" : {
 		prix : 5,
