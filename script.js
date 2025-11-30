@@ -25,6 +25,10 @@ const objetProduits1 = {
 		prix : 2,
 		image : "chocolat_chaud.png"
 	},
+	"Cookie" : {
+		prix : 1.5,
+		image : "cookie.png"
+	},
 	"Crêpe caramel" : {
 		prix : 2,
 		image : "crepe_caramel.png"
@@ -88,6 +92,30 @@ const objetProduits2 = {
 		prix : 5,
 		image : "decoration.png"
 	},
+	"Décoration lumineuse" : {
+		prix : 5,
+		image : "decoration_lumineuse.png"
+	},
+	"Jacinthe" : {
+		prix : 5,
+		image : "jacinthe.png"
+	},
+	"Marionnette DIY" : {
+		prix : 5,
+		image : "marionnette.png"
+	},
+	"Mug" : {
+		prix : 5,
+		image : "mug.png"
+	},
+	"Porte-clé" : {
+		prix : 5,
+		image : "porte_cle.png"
+	},
+	"Stylo" : {
+		prix : 3,
+		image : "stylo.png"
+	},
 	"Divers 1" : {
 		prix : 1,
 		image : "divers_1.png"
@@ -107,22 +135,6 @@ const objetProduits2 = {
 	"Divers 5" : {
 		prix : 5,
 		image : "divers_5.png"
-	},
-	"Jacinthe" : {
-		prix : 5,
-		image : "jacinthe.png"
-	},
-	"Marionnette DIY" : {
-		prix : 5,
-		image : "marionnette.png"
-	},
-	"Mug" : {
-		prix : 5,
-		image : "mug.png"
-	},
-	"Porte-clé" : {
-		prix : 5,
-		image : "porte_cle.png"
 	}
 };
 
