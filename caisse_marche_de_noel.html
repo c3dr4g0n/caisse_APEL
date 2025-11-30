@@ -27,14 +27,14 @@
 			</div>
 			<h3>Total : <span id="total">0.00</span> €</h3>
 			<button onclick="validerPanier()" style="background:#4caf50;color:white;">Valider le panier</button>
-			<button onclick="ouvrirPopupViderCommande()" style="background:#d9534f;color:white;">Vider le panier</button>
+			<button onclick="ouvrirPopupViderPanier()" style="background:#d9534f;color:white;">Vider le panier</button>
 			<!-- Popup de confirmation -->
-			<div id="popup_vider_commande" class="popup">
-				<div class="popup-contenu">
-					<p>Voulez-vous annuler supprimer cette commande ?</p>
-					<div class="popup-boutons">
-						<button onclick="confirmerSuppressionPanier()" class="danger">Oui, annuler</button>
-						<button onclick="fermerPopupViderCommande()">Annuler</button>
+			<div id="popup_vider_panier" class="popup">
+				<div class="popup_contenu">
+					<p>Voulez-vous vraiment vider le panier ?</p>
+					<div class="popup_boutons">
+						<button onclick="confirmerSuppressionPanier()" class="danger">Oui, vider</button>
+						<button onclick="fermerPopupViderPanier()">Non</button>
 					</div>
 				</div>
 			</div>
@@ -47,20 +47,20 @@
 			<button onclick="ouvrirPopupViderHistorique()" style="background:#d9534f;color:white;">Vider l'historique</button>
 			<!-- Popups de confirmation -->
 			<div id="popup_vider_derniere_commande_historique" class="popup">
-				<div class="popup-contenu">
-					<p>Voulez-vous vraiment supprimer la dernière commande ?</p>
-					<div class="popup-boutons">
-						<button onclick="confirmerSuppressionDerniereCommandeHistorique()" class="danger">Oui, supprimer</button>
-						<button onclick="fermerPopupViderDerniereCommandeHistorique()">Annuler</button>
+				<div class="popup_contenu">
+					<p>Voulez-vous vraiment annuler la dernière commande ?</p>
+					<div class="popup_boutons">
+						<button onclick="confirmerSuppressionDerniereCommandeHistorique()" class="danger">Oui, annuler</button>
+						<button onclick="fermerPopupViderDerniereCommandeHistorique()">Non</button>
 					</div>
 				</div>
 			</div>
 			<div id="popup_vider_historique" class="popup">
-				<div class="popup-contenu">
+				<div class="popup_contenu">
 					<p>Voulez-vous vraiment supprimer tout l'historique ?</p>
-					<div class="popup-boutons">
+					<div class="popup_boutons">
 						<button onclick="confirmerSuppressionHistorique()" class="danger">Oui, supprimer</button>
-						<button onclick="fermerPopupViderHistorique()">Annuler</button>
+						<button onclick="fermerPopupViderHistorique()">Non</button>
 					</div>
 				</div>
 			</div>

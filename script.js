@@ -285,7 +285,8 @@ function validerPanier(){
 		id: historique.length + 1,
 		produits: JSON.parse(JSON.stringify(panier)),
 		total: parseFloat(document.getElementById('total').textContent),
-		temps: new Date().toLocaleTimeString('fr-FR')
+		date: new Date().toLocaleDateString('fr-FR'),
+		heure: new Date().toLocaleTimeString('fr-FR')
 	};
 	
 	historique.unshift(commande);
@@ -301,7 +302,7 @@ function confirmerSuppressionPanier(){
 	panier = {};
 	afficherPanier();
 	// Fermer la popup
-	fermerPopupViderCommande();
+	fermerPopupViderPanier();
 }
 
 /** Commande **/
@@ -324,7 +325,7 @@ function afficherHistorique(){
 		const ligne = document.createElement('div');
 		ligne.className = 'ligne_commande';
 		const details = afficherDetailCommande(commande.produits);
-		ligne.innerHTML = `<b>Commande #${commande.id}</b> — ${commande.total.toFixed(2)}€ — ${commande.temps} (${details})`;
+		ligne.innerHTML = `<b>Commande #${commande.id}</b> — ${commande.total.toFixed(2)}€ — ${commande.heure} (${details})`;
 		divHistorique.appendChild(ligne);
 	});
 	
@@ -395,16 +396,16 @@ function calculerRecapitulatifProduitsHistorique(){
 /** Popups **/
 
 // Ouverture du popup pour annuler le panier en cours
-function ouvrirPopupViderCommande(){
+function ouvrirPopupViderPanier(){
 	if (Object.keys(panier).length === 0){
 		return;
 	}
-	document.getElementById("popup_vider_commande").style.display = "flex";
+	document.getElementById("popup_vider_panier").style.display = "flex";
 }
 
 // Fermeture du popup pour annuler le panier en cours
-function fermerPopupViderCommande(){
-	document.getElementById("popup_vider_commande").style.display = "none";
+function fermerPopupViderPanier(){
+	document.getElementById("popup_vider_panier").style.display = "none";
 }
 
 // Ouverture du popup pour annuler la dernière commande de l'historique
@@ -443,7 +444,7 @@ function exporterCommandesHistorique()
 	historique.forEach(commande => {
 		const details = afficherDetailCommande(commande.produits);
 		const chaine_total = commande.total.toString().replace('.', ',');
-		csvContenu += `${commande.id};${chaine_total};${commande.temps};${details}\n`;
+		csvContenu += `${commande.id};${chaine_total};${commande.date} ${commande.heure};${details}\n`;
 	});
 	
 	return csvContenu;

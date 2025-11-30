@@ -207,7 +207,7 @@ button{
 	z-index:1000;
 }
 
-.popup-contenu{
+.popup_contenu{
 	background:white;
 	padding:20px;
 	border-radius:10px;
@@ -217,13 +217,13 @@ button{
 	font-size:1rem;
 }
 
-.popup-boutons{
+.popup_boutons{
 	margin-top:20px;
 	display:flex;
 	justify-content:space-around;
 }
 
-.popup-boutons button{
+.popup_boutons button{
 	padding:10px 15px;
 	border:none;
 	border-radius:8px;
@@ -231,7 +231,7 @@ button{
 	cursor:pointer;
 }
 
-.popup-boutons .danger{
+.popup_boutons .danger{
 	background-color:#d9534f;
 	color:white;
 }
@@ -258,7 +258,7 @@ body.mode_nuit{
 	background:#1e1e1e;
 }
 
-.mode_nuit .popup-contenu{
+.mode_nuit .popup_contenu{
 	background:#1e1e1e;
 	color: white;
 }
