@@ -305,6 +305,20 @@ function confirmerSuppressionPanier(){
 	fermerPopupViderPanier();
 }
 
+// Calculer la monnaie à rendre
+function calculerMonnaie(){
+	const total = parseFloat(document.getElementById("popup_rendre_monnaie_total").textContent);
+	const donne = parseFloat(document.getElementById("popup_rendre_monnaie_montant_donne").value);
+	
+	if(isNaN(donne)){
+		return;
+	}
+	
+	const rendu = donne - total;
+	
+	document.getElementById("popup_rendre_monnaie_montant_a_rendre").textContent = (rendu >= 0 ? `${rendu.toFixed(2)} €` : "montant donné trop faible");
+}
+
 /** Commande **/
 
 // Afficher le détail des produits d'une commande
@@ -394,6 +408,22 @@ function calculerRecapitulatifProduitsHistorique(){
 }
 
 /** Popups **/
+
+// Ouverture du popup pour rendre la monnaie
+function ouvrirPopupRendreMonnaie(){
+	if (Object.keys(panier).length === 0){
+		return;
+	}
+	document.getElementById("popup_rendre_monnaie_total").textContent = document.getElementById("total").textContent;
+	document.getElementById("popup_rendre_monnaie").style.display = "flex";
+}
+
+// Fermeture du popup pour rendre la monnaie
+function fermerPopupRendreMonnaie(){
+	document.getElementById("popup_rendre_monnaie").style.display = "none";
+	document.getElementById("popup_rendre_monnaie_montant_a_rendre").textContent = "";
+	document.getElementById("popup_rendre_monnaie_montant_donne").value = 0;
+}
 
 // Ouverture du popup pour annuler le panier en cours
 function ouvrirPopupViderPanier(){
