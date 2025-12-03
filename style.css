@@ -236,6 +236,11 @@ button{
 	color:white;
 }
 
+.popup_boutons .valider{
+	background-color:#4caf50;
+	color:white;
+}
+
 /* MODE NUIT */
 body.mode_nuit{
 	background:#121212;
