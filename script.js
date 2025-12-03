@@ -422,7 +422,7 @@ function ouvrirPopupRendreMonnaie(){
 function fermerPopupRendreMonnaie(){
 	document.getElementById("popup_rendre_monnaie").style.display = "none";
 	document.getElementById("popup_rendre_monnaie_montant_a_rendre").textContent = "";
-	document.getElementById("popup_rendre_monnaie_montant_donne").value = 0;
+	document.getElementById("popup_rendre_monnaie_montant_donne").value = '';
 }
 
 // Ouverture du popup pour annuler le panier en cours
