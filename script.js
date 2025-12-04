@@ -306,17 +306,26 @@ function confirmerSuppressionPanier(){
 }
 
 // Calculer la monnaie à rendre
-function calculerMonnaie(){
+function calculerMonnaieAutomatiquement(){
 	const total = parseFloat(document.getElementById("popup_rendre_monnaie_total").textContent);
 	const donne = parseFloat(document.getElementById("popup_rendre_monnaie_montant_donne").value);
+	const affichage = document.getElementById("popup_rendre_monnaie_montant_a_rendre");
 	
 	if(isNaN(donne)){
+		affichage.textContent = "";
 		return;
 	}
 	
 	const rendu = donne - total;
 	
-	document.getElementById("popup_rendre_monnaie_montant_a_rendre").textContent = (rendu >= 0 ? `${rendu.toFixed(2)} €` : "montant donné trop faible");
+	if(rendu < 0){
+		affichage.textContent = `il manque ${Math.abs(rendu).toFixed(2)} €`;
+		affichage.style.color = "red";
+	}
+	else{
+		affichage.textContent = `${rendu.toFixed(2)} €`;
+		affichage.style.color = "green";
+	}
 }
 
 /** Commande **/
@@ -416,13 +425,19 @@ function ouvrirPopupRendreMonnaie(){
 	}
 	document.getElementById("popup_rendre_monnaie_total").textContent = document.getElementById("total").textContent;
 	document.getElementById("popup_rendre_monnaie").style.display = "flex";
+	const input = document.getElementById("popup_rendre_monnaie_montant_donne");
+	input.value = "";
+	const affichage = document.getElementById("popup_rendre_monnaie_montant_a_rendre");
+	affichage.textContent = "-";
+	affichage.style.color = "black";
+	input.addEventListener("input", calculerMonnaieAutomatiquement);
 }
 
 // Fermeture du popup pour rendre la monnaie
 function fermerPopupRendreMonnaie(){
 	document.getElementById("popup_rendre_monnaie").style.display = "none";
-	document.getElementById("popup_rendre_monnaie_montant_a_rendre").textContent = "";
-	document.getElementById("popup_rendre_monnaie_montant_donne").value = '';
+	const input = document.getElementById("popup_rendre_monnaie_montant_donne");
+	input.removeEventListener("input", calculerMonnaieAutomatiquement);
 }
 
 // Ouverture du popup pour annuler le panier en cours

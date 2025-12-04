@@ -44,10 +44,9 @@
 				<div class="popup_contenu">
 					<h3>Rendre la monnaie</h3>
 					<p>Total : <span id="popup_rendre_monnaie_total">0.00</span> €</p>
-					<input type="number" id="popup_rendre_monnaie_montant_donne" placeholder="Montant donné" />
+					<input type="number" id="popup_rendre_monnaie_montant_donne" placeholder="Montant donné" step="0.01" />
 					<p>Montant à rendre : <span id="popup_rendre_monnaie_montant_a_rendre">-</span></p>
 					<div class="popup_boutons">
-						<button onclick="calculerMonnaie()" class="valider">Calculer</button>
 						<button onclick="fermerPopupRendreMonnaie()">Fermer</button>
 					</div>
 				</div>
