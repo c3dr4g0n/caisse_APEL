@@ -108,6 +108,10 @@ const objetProduits2 = {
 		prix : 5,
 		image : "mug.png"
 	},
+	"Plante grasse" : {
+		prix : 5,
+		image : "plante_grasse.png"
+	},
 	"Porte-clé" : {
 		prix : 5,
 		image : "porte_cle.png"
