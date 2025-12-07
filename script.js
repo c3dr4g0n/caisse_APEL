@@ -581,17 +581,3 @@ function changerModeJourNuit(){
 		bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
 	}
 }
-
-// Afficher les caches présents et leurs fichiers
-caches.keys().then(cles => {
-  const divInfo = document.getElementById("info_cache");
-  divInfo.innerHTML = "Caches présents :<br>" + cles.join("<br>") + "<br><br>";
-
-  cles.forEach(cle => {
-    caches.open(cle).then(cache => {
-      cache.keys().then(requests => {
-        divInfo.innerHTML += `Contenu de ${cle} :<br>` + requests.map(r => r.url).join("<br>") + "<br><br>";
-      });
-    });
-  });
-});
