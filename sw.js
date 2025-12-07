@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.9.6";
+const version_cache = "caisse-APEL-version-1.1.9.7";
 
 const urls_pour_cache = [
 	"./",
@@ -56,5 +56,71 @@ self.addEventListener("install", evenement => {
             console.error('SW (v1.1.9) : Cache installation FAILED!', error);
             throw error; 
         })
+	);
+});
+
+self.addEventListener("activate", evenement => {
+	evenement.waitUntil(clients.claim());
+	
+	evenement.waitUntil(
+		caches.keys().then(
+			cles => {
+				const cles_a_supprimer = cles.filter(cle => cle !== version_cache);
+				
+				const promesses_suppression = cles_a_supprimer.map(cle => caches.delete(cle));
+				
+				return Promise.all(promesses_suppression);
+			}
+		);
+	);
+});
+
+self.addEventListener("activate", evenement => {
+    evenement.waitUntil(
+        caches.keys().then(cles => {
+            const cles_a_supprimer = cles.filter(cle => cle !== version_cache);
+            const promesses_suppression = cles_a_supprimer.map(cle => caches.delete(cle));
+            
+            return Promise.all(promesses_suppression);
+        })
+        .then(() => {
+            console.log('SW : Anciens caches nettoyés. Prise de contrôle des clients.');
+            return clients.claim();
+        })
+        .catch(error => {
+            console.error('SW : Échec de l’activation ou du nettoyage du cache !', error);
+            throw error; 
+        })
+    );
+});
+
+self.addEventListener("fetch", evenement => {
+	if(evenement.request.url.startsWith("chrome-extension")){
+		return;
+	}
+	
+	evenement.respondWith(
+		caches.match(evenement.request).then(cache_reponse => {
+			if(cache_reponse){
+				return cache_reponse;
+			}
+			return fetch(evenement.request)
+				.then(reseau_reponse => caches.open(version_cache).then(cache => {
+					cache.put(evenement.request, reseau_reponse.clone());
+					return reseau_reponse;
+				}))
+				.catch(() => {
+					if(evenement.request.mode === 'navigate'){
+						const url = evenement.request.url;
+						if(url.includes("caisse_alimentation.html")){
+							return caches.match("./caisse_alimentation.html");
+						}
+						if(url.includes("caisse_marche_de_noel.html")){
+							return caches.match("./caisse_marche_de_noel.html");
+						}
+						return caches.match("./index.html");
+					}
+				});
+		})
 	);
 });
