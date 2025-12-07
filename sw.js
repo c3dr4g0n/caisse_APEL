@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.0.7";
+const version_cache = "caisse-APEL-version-1.0.8";
 
 const urls_pour_cache = [
 	"./",
@@ -46,20 +46,17 @@ const urls_pour_cache = [
 
 self.addEventListener("install", evenement => {
 	evenement.waitUntil(
-		caches.open(version_cache).then(cache => {
-			cache.addAll(urls_pour_cache);
-		})
+		caches.open(version_cache).then(cache => cache.addAll(urls_pour_cache))
 	);
 });
 
 self.addEventListener("activate", evenement => {
-	const version_cache_temporaire = [version_cache];
 	evenement.waitUntil(
 		caches.keys().then(
 			cles =>
 				Promise.all(
 					cles.map(cle => {
-						if(!version_cache_temporaire.includes(cle)){
+						if(cle !== version_cache){
 							return caches.delete(cle);
 						}
 					})
@@ -78,15 +75,8 @@ self.addEventListener("fetch", evenement => {
 						cache.put(evenement.request, fetchRes.clone());
 						return fetchRes;
 				}))
-				.catch(erreur => {
+				.catch(() => {
 					if(evenement.request.mode === 'navigate'){
-						const url = evenement.request.url;
-						if(url.includes("caisse_alimentation.html")){
-							return caches.match("caisse_alimentation.html");
-						}
-						if(url.includes("caisse_marche_de_noel.html")){
-							return caches.match("caisse_marche_de_noel.html");
-						}
 						return caches.match("index.html");
 					}
 				});
