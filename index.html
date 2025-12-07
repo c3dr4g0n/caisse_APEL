@@ -3,8 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="theme-color" content="#4CAF50">
 		<title>Caisse APEL - ACCUEIL</title>
 		<link rel="stylesheet" href="style.css" />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="icon" sizes="192x192" href="images/icone_192.png" />
 		<style>
 			.accueil_bloc{
 				display:flex;
@@ -30,5 +33,13 @@
 			<button onclick="window.location.href='caisse_alimentation.html'" style="background:#4caf50;color:white;">Alimentation</button>
 			<button onclick="window.location.href='caisse_marche_de_noel.html'" style="background:#1565c0;color:white;">Marché de Noël</button>
 		</div>
+		<script>
+			if("serviceWorker" in navigator){
+				navigator.serviceWorker
+					.register("sw.js")
+					.then(() => console.log("Service Worker enregistré"))
+					.catch(err => console.error("Erreur du Service Worker : ", err));
+			}
+		</script>
 	</body>
 </html>
