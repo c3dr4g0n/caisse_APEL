@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.9.7";
+const version_cache = "caisse-APEL-version-1.1.9.8";
 
 const urls_pour_cache = [
 	"./",
@@ -56,22 +56,6 @@ self.addEventListener("install", evenement => {
             console.error('SW (v1.1.9) : Cache installation FAILED!', error);
             throw error; 
         })
-	);
-});
-
-self.addEventListener("activate", evenement => {
-	evenement.waitUntil(clients.claim());
-	
-	evenement.waitUntil(
-		caches.keys().then(
-			cles => {
-				const cles_a_supprimer = cles.filter(cle => cle !== version_cache);
-				
-				const promesses_suppression = cles_a_supprimer.map(cle => caches.delete(cle));
-				
-				return Promise.all(promesses_suppression);
-			}
-		);
 	);
 });
 
