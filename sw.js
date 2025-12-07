@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.7.2";
+const version_cache = "caisse-APEL-version-1.1.7.3";
 
 const urls_pour_cache = [
 	"./",
@@ -43,3 +43,9 @@ const urls_pour_cache = [
 	"./images/the.png",
 	"./images/vin_chaud.png"
 ];
+
+self.addEventListener("install", evenement => {
+	evenement.waitUntil(
+		caches.open(version_cache).then(cache => cache.addAll(urls_pour_cache))
+	);
+});
