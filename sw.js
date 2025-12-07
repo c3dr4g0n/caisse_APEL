@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.0.6";
+const version_cache = "caisse-APEL-version-1.0.7";
 
 const urls_pour_cache = [
 	"./",
@@ -68,31 +68,29 @@ self.addEventListener("activate", evenement => {
 });
 
 self.addEventListener("fetch", evenement => {
-	if(evenement.request.url.startsWith('chrome-extension://') || !evenement.request.url.startsWith('http')){
-		return;
-	}
 	evenement.respondWith(
-		caches.match(evenement.request).then(
-			cache_reponse => {
-				if(cache_reponse){
-					return cache_reponse;
-				}
-				return fetch(evenement.request).catch(() => {
-					if(evenement.request.mode === 'navigate' || evenement.request.destination === 'document'){
+		caches.match(evenement.request).then(cache_reponse => {
+			if(cache_reponse){
+				return cache_reponse;
+			}
+			return fetch(evenement.request)
+				.then(fetchRes => caches.open(version_cache).then(cache => {
+						cache.put(evenement.request, fetchRes.clone());
+						return fetchRes;
+				}))
+				.catch(erreur => {
+					if(evenement.request.mode === 'navigate'){
 						const url = evenement.request.url;
-						if(url.includes('caisse_alimentation.html'))
-						{
+						if(url.includes("caisse_alimentation.html")){
 							return caches.match("caisse_alimentation.html");
 						}
-						if(url.includes('caisse_marche_de_noel.html'))
-						{
+						if(url.includes("caisse_marche_de_noel.html")){
 							return caches.match("caisse_marche_de_noel.html");
 						}
 						return caches.match("index.html");
 					}
 				});
-			}
-		)
+		})
 	);
 });
 	
