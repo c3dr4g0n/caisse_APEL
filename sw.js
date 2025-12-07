@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.5";
+const version_cache = "caisse-APEL-version-1.1.6";
 
 const urls_pour_cache = [
 	"./",
@@ -53,14 +53,14 @@ self.addEventListener("install", evenement => {
 self.addEventListener("activate", evenement => {
 	evenement.waitUntil(
 		caches.keys().then(
-			cles =>
-				Promise.all(
-					cles.map(cle => {
-						if(cle !== version_cache){
-							return caches.delete(cle);
-						}
-					})
-				)
+			cles => {
+				const cles_a_supprimer = cles.filter(cle => cle !== version_cache);
+				
+				const promesses_suppression = cles_a_supprimer.map(cle => caches.delete(cle));
+				
+				// Attendre la résolution de toutes les suppressions
+				return Promise.all(promesses_suppression);
+			}
 		);
 	);
 });
@@ -77,8 +77,8 @@ self.addEventListener("fetch", evenement => {
 			}
 			return fetch(evenement.request)
 				.then(reseau_reponse => caches.open(version_cache).then(cache => {
-						cache.put(evenement.request, reseau_reponse.clone());
-						return reseau_reponse;
+					cache.put(evenement.request, reseau_reponse.clone());
+					return reseau_reponse;
 				}))
 				.catch(() => {
 					if(evenement.request.mode === 'navigate'){
