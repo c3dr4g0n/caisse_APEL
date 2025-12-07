@@ -28,6 +28,7 @@
 	</head>
 	<body>
 		<h1>Caisse APEL - ACCUEIL</h1>
+		<h2 id="version"></h2>
 		<div class="accueil_bloc">
 			<h2>Choisissez votre caisse :</h2>
 			<button onclick="window.location.href='caisse_alimentation.html'" style="background:#4caf50;color:white;">Alimentation</button>
@@ -37,7 +38,19 @@
 			if("serviceWorker" in navigator){
 				navigator.serviceWorker
 					.register("sw.js")
-					.then(() => console.log("Service Worker enregistré"))
+					.then(() => {
+						console.log("Service Worker enregistré");
+						
+						navigator.serviceWorker.addEventListener("message", (event) => {
+							if (event.data?.version) {
+								document.getElementById("version").textContent = "Version " + event.data.version;
+							}
+						});
+						
+						if (navigator.serviceWorker.controller) {
+							navigator.serviceWorker.controller.postMessage("getVersion");
+						}
+					})
 					.catch(err => console.error("Erreur du Service Worker : ", err));
 			}
 		</script>

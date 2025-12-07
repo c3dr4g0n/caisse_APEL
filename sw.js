@@ -1,4 +1,5 @@
-const version_cache = "caisse-APEL-version-1.0.0";
+const version_application = "2.0.0";
+const version_cache = `caisse-APEL-version-${version_application}`;
 
 const urls_pour_cache = [
 	"./",
@@ -107,4 +108,10 @@ self.addEventListener("fetch", evenement => {
 				});
 		})
 	);
+});
+
+self.addEventListener("message", (evenement) => {
+	if(evenement.data === "getVersion"){
+		evenement.source.postMessage({version : version_application});
+	}
 });
