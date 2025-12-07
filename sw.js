@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.0.1";
+const version_cache = "caisse-APEL-version-1.0.2";
 
 // 🧩 Liste toutes tes pages + CSS + JS + IMAGES ici :
 const urls_pour_cache = [
@@ -35,7 +35,7 @@ const urls_pour_cache = [
 	"./images/gateau.png",
 	"./images/guimauve.png",
 	"./images/jacinthe.png",
-	"./images/marionette.png",
+	"./images/marionnette.png",
 	"./images/mug.png",
 	"./images/pate_de_fruits.png",
 	"./images/plante_grasse.png",
@@ -60,10 +60,11 @@ self.addEventListener("activate", evenement => {
 		caches.keys().then(
 			cles =>
 				Promise.all(
-					cles.map(cle => !version_cache_temporaire.includes(cle)){
-						return caches.delete(cle);
-					}
-				)
+					cles.map(cle => {
+						if(!version_cache_temporaire.includes(cle)){
+							return caches.delete(cle);
+						}
+					})
 		)
 	);
 });
