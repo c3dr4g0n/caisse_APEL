@@ -1,8 +1,6 @@
-const version_cache = "caisse-APEL-version-1.0.2";
+const version_cache = "caisse-APEL-version-1.0.3";
 
-// 🧩 Liste toutes tes pages + CSS + JS + IMAGES ici :
 const urls_pour_cache = [
-	// Fichiers
 	"./",
 	"./index.html",
 	"./caisse_alimentation.html",
@@ -73,7 +71,10 @@ self.addEventListener("fetch", evenement => {
 	evenement.respondWith(
 		caches.match(evenement.request).then(
 			cache_reponse => {
-				return(cache_reponse || fetch(evenement.request).catch(() => {
+				if(cache_reponse){
+					return cache_reponse;
+				}
+				return fetch(evenement.request).catch(() => {
 					return caches.match("index.html");
 				});
 			}
