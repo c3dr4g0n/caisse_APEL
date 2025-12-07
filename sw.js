@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.4";
+const version_cache = "caisse-APEL-version-1.1.5";
 
 const urls_pour_cache = [
 	"./",
@@ -60,7 +60,8 @@ self.addEventListener("activate", evenement => {
 							return caches.delete(cle);
 						}
 					})
-		)
+				)
+		);
 	);
 });
 
