@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.2";
+const version_cache = "caisse-APEL-version-1.1.3";
 
 const urls_pour_cache = [
 	"https://c3dr4g0n.github.io/caisse_APEL/",
@@ -83,12 +83,12 @@ self.addEventListener("fetch", evenement => {
 					if(evenement.request.mode === 'navigate'){
 						const url = evenement.request.url;
 						if(url.includes("caisse_alimentation.html")){
-							return caches.match("caisse_alimentation.html");
+							return caches.match("./caisse_alimentation.html");
 						}
 						if(url.includes("caisse_marche_de_noel.html")){
-							return caches.match("caisse_marche_de_noel.html");
+							return caches.match("./caisse_marche_de_noel.html");
 						}
-						return caches.match("index.html");
+						return caches.match("./index.html");
 					}
 					return;
 				});
