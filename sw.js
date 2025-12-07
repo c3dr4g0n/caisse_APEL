@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.9.3";
+const version_cache = "caisse-APEL-version-1.1.9.4";
 
 const urls_pour_cache = [
 	"./",
@@ -43,3 +43,18 @@ const urls_pour_cache = [
 	"./images/the.png",
 	"./images/vin_chaud.png"
 ];
+
+self.addEventListener("install", evenement => {
+	self.skipWaiting();
+	
+	evenement.waitUntil(
+		caches.open(version_cache).then(cache => {
+			console.log('SW (v1.1.9) : Tentative de mise en cache atomique');
+			return cache.addAll(urls_pour_cache);
+		})
+		.catch(error => {
+            console.error('SW (v1.1.9) : Cache installation FAILED!', error);
+            throw error; 
+        })
+	);
+});
