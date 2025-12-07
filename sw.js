@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.1.6";
+const version_cache = "caisse-APEL-version-1.1.7";
 
 const urls_pour_cache = [
 	"./",
@@ -58,7 +58,6 @@ self.addEventListener("activate", evenement => {
 				
 				const promesses_suppression = cles_a_supprimer.map(cle => caches.delete(cle));
 				
-				// Attendre la résolution de toutes les suppressions
 				return Promise.all(promesses_suppression);
 			}
 		);
