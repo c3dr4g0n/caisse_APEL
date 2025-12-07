@@ -1,4 +1,4 @@
-const version_cache = "caisse-APEL-version-1.0.3";
+const version_cache = "caisse-APEL-version-1.0.4";
 
 const urls_pour_cache = [
 	"./",
@@ -68,6 +68,9 @@ self.addEventListener("activate", evenement => {
 });
 
 self.addEventListener("fetch", evenement => {
+	if(evenement.request.url.startsWith('chrome-extension://')){
+		return;
+	}
 	evenement.respondWith(
 		caches.match(evenement.request).then(
 			cache_reponse => {
