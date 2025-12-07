@@ -1,47 +1,47 @@
-const version_cache = "caisse-APEL-version-1.1.3";
+const version_cache = "caisse-APEL-version-1.1.4";
 
 const urls_pour_cache = [
-	"https://c3dr4g0n.github.io/caisse_APEL/",
-	"https://c3dr4g0n.github.io/caisse_APEL/index.html",
-	"https://c3dr4g0n.github.io/caisse_APEL/caisse_alimentation.html",
-	"https://c3dr4g0n.github.io/caisse_APEL/caisse_marche_de_noel.html",
-	"https://c3dr4g0n.github.io/caisse_APEL/style.css",
-	"https://c3dr4g0n.github.io/caisse_APEL/script.js",
-	"https://c3dr4g0n.github.io/caisse_APEL/manifest.json",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/icone_192.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/icone_512.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/bijou.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/bonbon.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/bougie.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/cafe.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/carte_de_voeux.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/chaussettes.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/chocolat.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/chocolat_chaud.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/cookie.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/crepe_caramel.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/crepe_chocolat.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/crepe_sucre.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/cupcake.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/decoration.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/decoration_lumineuse.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/divers_1.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/divers_2.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/divers_3.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/divers_4.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/divers_5.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/gateau.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/guimauve.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/jacinthe.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/marionnette.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/mug.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/pate_de_fruits.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/plante_grasse.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/porte_cle.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/sable.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/stylo.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/the.png",
-	"https://c3dr4g0n.github.io/caisse_APEL/images/vin_chaud.png"
+	"./",
+	"./index.html",
+	"./caisse_alimentation.html",
+	"./caisse_marche_de_noel.html",
+	"./style.css",
+	"./script.js",
+	"./manifest.json",
+	"./images/icone_192.png",
+	"./images/icone_512.png",
+	"./images/bijou.png",
+	"./images/bonbon.png",
+	"./images/bougie.png",
+	"./images/cafe.png",
+	"./images/carte_de_voeux.png",
+	"./images/chaussettes.png",
+	"./images/chocolat.png",
+	"./images/chocolat_chaud.png",
+	"./images/cookie.png",
+	"./images/crepe_caramel.png",
+	"./images/crepe_chocolat.png",
+	"./images/crepe_sucre.png",
+	"./images/cupcake.png",
+	"./images/decoration.png",
+	"./images/decoration_lumineuse.png",
+	"./images/divers_1.png",
+	"./images/divers_2.png",
+	"./images/divers_3.png",
+	"./images/divers_4.png",
+	"./images/divers_5.png",
+	"./images/gateau.png",
+	"./images/guimauve.png",
+	"./images/jacinthe.png",
+	"./images/marionnette.png",
+	"./images/mug.png",
+	"./images/pate_de_fruits.png",
+	"./images/plante_grasse.png",
+	"./images/porte_cle.png",
+	"./images/sable.png",
+	"./images/stylo.png",
+	"./images/the.png",
+	"./images/vin_chaud.png"
 ];
 
 self.addEventListener("install", evenement => {
@@ -90,9 +90,7 @@ self.addEventListener("fetch", evenement => {
 						}
 						return caches.match("./index.html");
 					}
-					return;
 				});
 		})
 	);
 });
-	
