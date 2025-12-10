@@ -273,9 +273,25 @@ body.mode_nuit{
 	background:#1e1e1e;
 }
 
+.mode_nuit .fond_de_caisse .carte{
+	background:#1e1e1e;
+}
+
+.mode_nuit .fond_de_caisse .total{
+	background:#444444;
+}
+
+.mode_nuit .fond_de_caisse_recette .total{
+	background:#444444;
+}
+
 .mode_nuit .popup_contenu{
 	background:#1e1e1e;
 	color: white;
+}
+
+.mode_nuit .popup_contenu .ok{
+	background:#444444;
 }
 
 .mode_nuit .produits button{

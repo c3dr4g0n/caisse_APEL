@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="theme-color" content="#9c27b0">
+		<title>Fond de caisse</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="manifest" href="manifest.json" />
+		<link rel="icon" sizes="192x192" href="images/icone_192.png" />
+		<style>
+			.fond_de_caisse{
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 15px;
+			}
+			
+			.carte{
+				background: #fff;
+				padding: 15px;
+				border-radius: 12px;
+				margin-bottom: 20px;
+				box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+			}
+			
+			.carte h2{
+				text-align: center;
+				margin-bottom: 10px;
+			}
+			
+			.fond_de_caisse_ligne{
+				display: flex;
+				justify-content: space-between;
+				margin: 8px 0;
+			}
+			
+			.fond_de_caisse_ligne input{
+				width: 60px;
+				text-align: center;
+				font-size: 1.1em;
+			}
+			
+			.fond_de_caisse_boutons{
+				width:100%;
+				margin:10px 0;
+			}
+			
+			.fond_de_caisse_boutons button{
+				width:100%;
+				margin:10px 0;
+			}
+			
+			.total{
+				margin-top: 15px;
+				font-size: 1.4em;
+				font-weight: bold;
+				text-align: center;
+				padding: 10px;
+				border-radius: 10px;
+				background: #eef4ff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="boutons_options">
+			<button id="bouton_retour" onclick="window.location.href='index.html'">
+				<span class="bouton_retour_icone">
+					&#9664;
+				</span>
+				<span class="bouton_retour_texte">
+					Retour à l'accueil
+				</span>
+			</button>
+			<button id="bouton_mode_nuit" onclick="changerModeJourNuit()"></button>
+		</div>
+		<h1>FOND DE CAISSE</h1>
+		<div class="fond_de_caisse">
+			<div class="carte">
+				<h2>Début</h2>
+				<div id="fond_de_caisse_debut">
+				</div>
+				<div class="total" id="total_fond_de_caisse_debut">Total : 0 €</div>
+			</div>
+			<div class="carte">
+				<h2>Fin</h2>
+				<div id="fond_de_caisse_fin">
+				</div>
+				<div class="total" id="total_fond_de_caisse_fin">Total : 0 €</div>
+			</div>
+		</div>
+		<div class="fond_de_caisse_recette">
+			<div class="total" id="recette">Recette : 0 €</div>
+		</div>
+		<div class="fond_de_caisse_boutons">
+			<button onclick="ouvrirPopupViderFondDeCaisse()" style="background:#d9534f;color:white;">Remise à zéro</button>
+			<button onclick="exporterFondDeCaisse()" style="background:#1565C0;color:white;">Télécharger</button>
+			<!-- Popup de confirmation -->
+			<div id="popup_vider_fond_de_caisse" class="popup">
+				<div class="popup_contenu">
+					<p>Voulez-vous vraiment remttre à 0 le fond de caisse ?</p>
+					<div class="popup_boutons">
+						<button onclick="confirmerSuppressionFondDeCaisse()" class="danger">Oui, remettre à 0</button>
+						<button onclick="fermerPopupViderFondDeCaisse()" class="ok">Non</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="script.js"></script>
+		<script>
+			// Les fonds de caisse
+			let fond_de_caisse_debut = JSON.parse(localStorage.getItem('fond_de_caisse_debut') || '[]');
+			let fond_de_caisse_fin = JSON.parse(localStorage.getItem('fond_de_caisse_fin') || '[]');
+			
+			// Les différents billets et pièces possibles
+			const VALEURS = {
+				billet_50 : 50,
+				billet_20 : 20,
+				billet_10 : 10,
+				billet_5 : 5,
+				piece_2 : 2,
+				piece_1 : 1,
+				piece_050 : 0.5,
+				piece_020 : 0.2,
+				piece_010 : 0.1,
+				piece_005 : 0.05,
+				piece_002 : 0.02,
+				piece_001 : 0.01
+			};
+			
+			genererFondDeCaisse(VALEURS, "fond_de_caisse_debut");
+			genererFondDeCaisse(VALEURS, "fond_de_caisse_fin");
+			miseAJourAutomatiqueFondDeCaisse();
+			calculeFondDeCaisse();
+			
+			// Générer les fonds de caisse
+			function genererFondDeCaisse(valeurs, id_caisse){
+				const div = document.getElementById(id_caisse);
+				div.innerHTML = "";
+				
+				Object.entries(valeurs).forEach(([id, valeur]) => {
+					const valeur_initiale = (id_caisse === 'fond_de_caisse_debut') ? fond_de_caisse_debut[id] || 0 : fond_de_caisse_fin[id] || 0;
+					const div_input = document.createElement("div");
+					div_input.className = "fond_de_caisse_ligne"
+					div_input.innerHTML = `${valeur}€ : <input type="number" min="0" id="${id_caisse}_${id}" value="${valeur_initiale}">`;
+					
+					div.appendChild(div_input);
+				});
+			}
+			
+			function calculeFondDeCaisse()
+			{
+				calcule("fond_de_caisse_debut");
+				calcule("fond_de_caisse_fin");
+				calculeRecette();
+				sauvegarderFondDeCaisse();
+			}
+			
+			function calcule(prefix){
+				let total = 0;
+				
+				for (const id in VALEURS){
+					const input = document.getElementById(prefix + "_" + id);
+					if (input) total += (parseInt(input.value) || 0) * VALEURS[id];
+				}
+				
+				document.getElementById("total_" + prefix).innerText = "Total : " + total.toFixed(2) + " €";
+			}
+			
+			function calculeRecette(){
+				let total = 0;
+				
+				for (const id in VALEURS){
+					const input_debut = document.getElementById("fond_de_caisse_debut_" + id);
+					const input_fin = document.getElementById("fond_de_caisse_fin_" + id);
+					if (input_debut) total -= (parseInt(input_debut.value) || 0) * VALEURS[id];
+					if (input_fin) total += (parseInt(input_fin.value) || 0) * VALEURS[id];
+				}
+				
+				document.getElementById("recette").innerText = "Recette : " + total.toFixed(2) + " €";
+			}
+			
+			function sauvegarderFondDeCaisse(){
+				const debut = {};
+				const fin = {};
+				
+				Object.keys(VALEURS).forEach(id => {
+					debut[id] = document.getElementById(`fond_de_caisse_debut_${id}`).value || 0;
+					fin[id] = document.getElementById(`fond_de_caisse_fin_${id}`).value || 0;
+				});
+				
+				localStorage.setItem('fond_de_caisse_debut', JSON.stringify(debut));
+				localStorage.setItem('fond_de_caisse_fin', JSON.stringify(fin));
+			}
+			
+			function miseAJourAutomatiqueFondDeCaisse(){
+				document.querySelectorAll("input").forEach(input => {
+					input.addEventListener("input", () => {
+						calculeFondDeCaisse();
+					});
+				});
+			}
+			
+			// Ouverture du popup pour remettre à 0 le fond de caisse
+			function ouvrirPopupViderFondDeCaisse(){
+				document.getElementById("popup_vider_fond_de_caisse").style.display = "flex";
+			}
+			
+			// Fermeture du popup pour remettre à 0 le fond de caisse
+			function fermerPopupViderFondDeCaisse(){
+				document.getElementById("popup_vider_fond_de_caisse").style.display = "none";
+			}
+			
+			// Remettre à 0 le fond de caisse
+			function confirmerSuppressionFondDeCaisse(){
+				document.querySelectorAll("input").forEach(input => input.value = 0);
+				calculeFondDeCaisse();
+				fermerPopupViderFondDeCaisse();
+			}
+			
+			// Exporter le fond de caisse
+			function exporterFondDeCaisse(){
+				let csv = "Type;Valeur;Début;Fin\n";
+				let total_debut = 0;
+				let total_fin = 0;
+				
+				Object.entries(VALEURS).forEach(([id, valeur]) => {
+					const debut = document.getElementById(`fond_de_caisse_debut_${id}`).value || 0;
+					const fin = document.getElementById(`fond_de_caisse_fin_${id}`).value || 0;
+					csv += `${id};${valeur};${debut};${fin}\n`;
+					total_debut += (debut * valeur);
+					total_fin += (fin * valeur);
+				});
+				
+				csv += `TOTAL;;${total_debut};${total_fin}`;
+				
+				telechargerCSV("fond_de_caisse", csv);
+			}
+		</script>
+	</body>
+</html>

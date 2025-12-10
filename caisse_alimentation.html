@@ -19,7 +19,7 @@
 					Retour à l'accueil
 				</span>
 			</button>
-			<button id="bouton_mode_nuit"onclick="changerModeJourNuit()"></button>
+			<button id="bouton_mode_nuit" onclick="changerModeJourNuit()"></button>
 		</div>
 		<h1>Caisse APEL - ALIMENTATION</h1>
 		<div class="produits" id="liste_produits_1">
@@ -29,7 +29,7 @@
 			<div id="panier">
 			</div>
 			<h3>Total : <span id="total">0.00</span> €</h3>
-			<button onclick="ouvrirPopupRendreMonnaie()" style="background:#FF9800;color:white;">Rendre la monnaie</button>
+			<button onclick="ouvrirPopupRendreMonnaie()" style="background:#9c27b0;color:white;">Rendre la monnaie</button>
 			<button onclick="validerPanier()" style="background:#4caf50;color:white;">Valider le panier</button>
 			<button onclick="ouvrirPopupViderPanier()" style="background:#d9534f;color:white;">Vider le panier</button>
 			<!-- Popup de confirmation -->
@@ -38,7 +38,7 @@
 					<p>Voulez-vous vraiment vider le panier ?</p>
 					<div class="popup_boutons">
 						<button onclick="confirmerSuppressionPanier()" class="danger">Oui, vider</button>
-						<button onclick="fermerPopupViderPanier()">Non</button>
+						<button onclick="fermerPopupViderPanier()" class="ok">Non</button>
 					</div>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 					<input type="number" id="popup_rendre_monnaie_montant_donne" placeholder="Montant donné" step="0.01" />
 					<p>Montant à rendre : <span id="popup_rendre_monnaie_montant_a_rendre">-</span></p>
 					<div class="popup_boutons">
-						<button onclick="fermerPopupRendreMonnaie()">Fermer</button>
+						<button onclick="fermerPopupRendreMonnaie()" class="ok">Fermer</button>
 					</div>
 				</div>
 			</div>
@@ -67,7 +67,7 @@
 					<p>Voulez-vous vraiment annuler la dernière commande ?</p>
 					<div class="popup_boutons">
 						<button onclick="confirmerSuppressionDerniereCommandeHistorique()" class="danger">Oui, annuler</button>
-						<button onclick="fermerPopupViderDerniereCommandeHistorique()">Non</button>
+						<button onclick="fermerPopupViderDerniereCommandeHistorique()" class="ok">Non</button>
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 					<p>Voulez-vous vraiment vider tout l'historique ?</p>
 					<div class="popup_boutons">
 						<button onclick="confirmerSuppressionHistorique()" class="danger">Oui, vider</button>
-						<button onclick="fermerPopupViderHistorique()">Non</button>
+						<button onclick="fermerPopupViderHistorique()" class="ok">Non</button>
 					</div>
 				</div>
 			</div>
@@ -88,5 +88,6 @@
 			<button onclick="exporterRapport()" style="background:#1565C0;color:white;">Télécharger le rapport</button>
 		</div>
 		<script src="script.js"></script>
+		<script src="script_caisse.js"></script>
 	</body>
 </html>
