@@ -10,34 +10,34 @@
 		<link rel="icon" sizes="192x192" href="images/icone_192.png" />
 		<style>
 			.fond_de_caisse{
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 15px;
+				display:grid;
+				grid-template-columns:1fr 1fr;
+				gap:15px;
 			}
 			
 			.carte{
-				background: #fff;
-				padding: 15px;
-				border-radius: 12px;
-				margin-bottom: 20px;
-				box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+				background:#fff;
+				padding:15px;
+				border-radius:12px;
+				margin-bottom:20px;
+				box-shadow:0 2px 6px rgba(0,0,0,0.15);
 			}
 			
 			.carte h2{
-				text-align: center;
-				margin-bottom: 10px;
+				text-align:center;
+				margin-bottom:10px;
 			}
 			
 			.fond_de_caisse_ligne{
-				display: flex;
-				justify-content: space-between;
-				margin: 8px 0;
+				display:flex;
+				justify-content:space-between;
+				margin:8px 0;
 			}
 			
 			.fond_de_caisse_ligne input{
-				width: 60px;
-				text-align: center;
-				font-size: 1.1em;
+				width:60px;
+				text-align:center;
+				font-size:1.1em;
 			}
 			
 			.fond_de_caisse_boutons{
@@ -51,13 +51,13 @@
 			}
 			
 			.total{
-				margin-top: 15px;
-				font-size: 1.4em;
-				font-weight: bold;
-				text-align: center;
-				padding: 10px;
-				border-radius: 10px;
-				background: #eef4ff;
+				margin-top:15px;
+				font-size:1.4em;
+				font-weight:bold;
+				text-align:center;
+				padding:10px;
+				border-radius:10px;
+				background:#eef4ff;
 			}
 		</style>
 	</head>
@@ -97,7 +97,7 @@
 			<!-- Popup de confirmation -->
 			<div id="popup_vider_fond_de_caisse" class="popup">
 				<div class="popup_contenu">
-					<p>Voulez-vous vraiment remttre à 0 le fond de caisse ?</p>
+					<p>Voulez-vous vraiment remettre à 0 le fond de caisse ?</p>
 					<div class="popup_boutons">
 						<button onclick="confirmerSuppressionFondDeCaisse()" class="danger">Oui, remettre à 0</button>
 						<button onclick="fermerPopupViderFondDeCaisse()" class="ok">Non</button>
