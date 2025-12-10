@@ -197,6 +197,9 @@
 					input.addEventListener("input", () => {
 						calculeFondDeCaisse();
 					});
+					input.addEventListener("focus", () => {
+						input.value = '';
+					});
 				});
 			}
 			
