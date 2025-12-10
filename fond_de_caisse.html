@@ -198,7 +198,8 @@
 						calculeFondDeCaisse();
 					});
 					input.addEventListener("focus", () => {
-						input.select();
+						input.value = '';
+						calculeFondDeCaisse();
 					});
 				});
 			}
