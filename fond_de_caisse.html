@@ -240,12 +240,16 @@
 				Object.entries(VALEURS).forEach(([id, valeur]) => {
 					const debut = document.getElementById(`fond_de_caisse_debut_${id}`).value || 0;
 					const fin = document.getElementById(`fond_de_caisse_fin_${id}`).value || 0;
-					csv += `${id};${valeur};${debut};${fin}\n`;
+					const chaine_valeur =  valeur.toString().replace('.', ',');
+					csv += `${id};${chaine_valeur};${debut};${fin}\n`;
 					total_debut += (debut * valeur);
 					total_fin += (fin * valeur);
 				});
 				
-				csv += `TOTAL;;${total_debut};${total_fin}`;
+				const chaine_total_debut = total_debut.toString().replace('.', ',');
+				const chaine_total_fin = total_fin.toString().replace('.', ',');
+				
+				csv += `TOTAL;;${chaine_total_debut};${chaine_total_fin}`;
 				
 				telechargerCSV("fond_de_caisse", csv);
 			}
