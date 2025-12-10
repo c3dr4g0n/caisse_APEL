@@ -155,15 +155,15 @@
 				sauvegarderFondDeCaisse();
 			}
 			
-			function calcule(prefix){
+			function calcule(prefixe){
 				let total = 0;
 				
 				for (const id in VALEURS){
-					const input = document.getElementById(prefix + "_" + id);
+					const input = document.getElementById(prefixe + "_" + id);
 					if (input) total += (parseInt(input.value) || 0) * VALEURS[id];
 				}
 				
-				document.getElementById("total_" + prefix).innerText = "Total : " + total.toFixed(2) + " €";
+				document.getElementById("total_" + prefixe).innerText = "Total : " + total.toFixed(2) + " €";
 			}
 			
 			function calculeRecette(){
@@ -197,9 +197,19 @@
 					input.addEventListener("input", () => {
 						calculeFondDeCaisse();
 					});
+					
 					input.addEventListener("focus", () => {
-						input.value = '';
-						calculeFondDeCaisse();
+						if(input.value === "0" || input.value === 0){
+							input.value = '';
+							calculeFondDeCaisse();
+						}
+					});
+					
+					input.addEventListener("blur", () => {
+						if(input.value.trim() === ""){
+							input.value = "0";
+							calculeFondDeCaisse();
+						}
 					});
 				});
 			}
