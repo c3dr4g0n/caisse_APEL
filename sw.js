@@ -1,4 +1,4 @@
-const version_application = "1.1.6";
+const version_application = "1.2.0";
 const version_cache = `caisse-APEL-version-${version_application}`;
 
 const urls_pour_cache = [
@@ -13,38 +13,22 @@ const urls_pour_cache = [
 	"./manifest.json",
 	"./images/icone_192.png",
 	"./images/icone_512.png",
-	"./images/bijou.png",
-	"./images/bonbon.png",
-	"./images/bougie.png",
 	"./images/cafe.png",
-	"./images/carte_de_voeux.png",
-	"./images/chaussettes.png",
-	"./images/chocolat.png",
 	"./images/chocolat_chaud.png",
-	"./images/cookie.png",
+	"./images/the.png",
+	"./images/vin_chaud.png",
 	"./images/crepe_caramel.png",
 	"./images/crepe_chocolat.png",
 	"./images/crepe_sucre.png",
-	"./images/cupcake.png",
-	"./images/decoration.png",
-	"./images/decoration_lumineuse.png",
-	"./images/divers_1.png",
-	"./images/divers_2.png",
-	"./images/divers_3.png",
-	"./images/divers_4.png",
-	"./images/divers_5.png",
 	"./images/gateau.png",
 	"./images/guimauve.png",
-	"./images/jacinthe.png",
-	"./images/marionnette.png",
-	"./images/mug.png",
 	"./images/pate_de_fruits.png",
-	"./images/plante_grasse.png",
-	"./images/porte_cle.png",
 	"./images/sable.png",
-	"./images/stylo.png",
-	"./images/the.png",
-	"./images/vin_chaud.png"
+	"./images/marche_de_noel_200.png",
+	"./images/marche_de_noel_300.png",
+	"./images/marche_de_noel_400.png",
+	"./images/marche_de_noel_500.png",
+	"./images/marche_de_noel_600.png"
 ];
 
 self.addEventListener("install", evenement => {

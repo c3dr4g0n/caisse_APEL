@@ -56,73 +56,25 @@ const objetProduits1 = {
 };
 // Autre
 const objetProduits2 = {
-	"Bijou" : {
-		prix : 5,
-		image : "bijou.png"
-	},
-	"Bougie" : {
-		prix : 5,
-		image : "bougie.png"
-	},
-	"Carte de voeux" : {
-		prix : 1,
-		image : "carte_de_voeux.png"
-	},
-	"Chaussettes" : {
-		prix : 3,
-		image : "chaussettes.png"
-	},
-	"Décoration" : {
-		prix : 5,
-		image : "decoration.png"
-	},
-	"Décoration lumineuse" : {
-		prix : 5,
-		image : "decoration_lumineuse.png"
-	},
-	"Jacinthe" : {
-		prix : 5,
-		image : "jacinthe.png"
-	},
-	"Marionnette DIY" : {
-		prix : 5,
-		image : "marionnette.png"
-	},
-	"Mug" : {
-		prix : 5,
-		image : "mug.png"
-	},
-	"Plante grasse" : {
-		prix : 5,
-		image : "plante_grasse.png"
-	},
-	"Porte-clé" : {
-		prix : 5,
-		image : "porte_cle.png"
-	},
-	"Stylo" : {
-		prix : 3,
-		image : "stylo.png"
-	},
-	"Divers 1" : {
-		prix : 1,
-		image : "divers_1.png"
-	},
-	"Divers 2" : {
+	"Divers 2 €" : {
 		prix : 2,
-		image : "divers_2.png"
+		image : "marche_de_noel_200.png"
 	},
-	"Divers 3" : {
+	"Divers 3 €" : {
 		prix : 3,
-		image : "divers_3.png"
+		image : "marche_de_noel_300.png"
 	},
-	"Divers 4" : {
+	"Divers 4 €" : {
 		prix : 4,
-		image : "divers_4.png"
+		image : "marche_de_noel_400.png"
 	},
-	"Divers 5" : {
+	"Divers 5 €" : {
 		prix : 5,
-		image : "divers_5.png"
+		image : "marche_de_noel_500.png"
+	},
+	"Divers 6 €" : {
+		prix : 6,
+		image : "marche_de_noel_600.png"
 	}
 };
 
@@ -336,7 +288,7 @@ function afficherHistorique(){
 	let texte_recapitulatif = "<h4>Alimentation</h4>";
 	Object.entries(recapitulatif).forEach(([nom, quantite]) => {
 		if(nom === Object.keys(objetProduits2)[0]){
-			texte_recapitulatif += `<h4>Autre</h4>`;
+			texte_recapitulatif += `<h4>Marché de Noël</h4>`;
 		}
 		texte_recapitulatif += `${nom} : ${quantite}<br />`;
 	});
