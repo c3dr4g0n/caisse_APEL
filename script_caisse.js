@@ -56,6 +56,10 @@ const objetProduits1 = {
 };
 // Autre
 const objetProduits2 = {
+	"Divers 1 €" : {
+		prix : 1,
+		image : "marche_de_noel_100.png"
+	},
 	"Divers 2 €" : {
 		prix : 2,
 		image : "marche_de_noel_200.png"
