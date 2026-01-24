@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="theme-color" content="#FF9800">
+		<title>Caisse APEL - MARCHÉ DE NOËL</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="icon" sizes="192x192" href="images/icone_192.png" />
+		<style>
+			.accueil_bloc{
+				display:flex;
+				flex-direction:column;
+				align-items:center;
+				justify-content:center;
+				min-height:80vh;
+			}
+			
+			.accueil_bloc button{
+				width:80%;
+				max-width:400px;
+				margin:15px 0;
+				padding:30px;
+				font-size:1.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="boutons_options">
+			<button id="bouton_retour" onclick="window.location.href='index.html'">
+				<span class="bouton_retour_icone">
+					&#9664;
+				</span>
+				<span class="bouton_retour_texte">
+					Retour
+				</span>
+			</button>
+			<button id="bouton_mode_nuit" onclick="changerModeJourNuit()"></button>
+		</div>
+		<h1>MARCHÉ DE NOËL</h1>
+		<h2 id="version"></h2>
+		<div class="accueil_bloc">
+			<h2>Choisissez votre caisse :</h2>
+			<button onclick="window.location.href='caisse_alimentation.html'" style="background:#d9534f;color:white;">Alimentation</button>
+			<button onclick="window.location.href='caisse_marche_de_noel.html'" style="background:#4caf50;color:white;">Marché de Noël</button>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>

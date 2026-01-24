@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<meta name="theme-color" content="#1565c0">
+		<meta name="theme-color" content="#4caf50">
 		<title>Caisse APEL - MARCHÉ DE NOËL</title>
 		<link rel="stylesheet" href="style.css" />
 		<link rel="manifest" href="manifest.json" />
@@ -11,24 +11,35 @@
 	</head>
 	<body>
 		<div class="boutons_options">
-			<button id="bouton_retour" onclick="window.location.href='index.html'">
+			<button id="bouton_retour" onclick="window.location.href='marche_de_noel.html'">
 				<span class="bouton_retour_icone">
 					&#9664;
 				</span>
 				<span class="bouton_retour_texte">
-					Retour à l'accueil
+					Retour
 				</span>
 			</button>
 			<button id="bouton_mode_nuit" onclick="changerModeJourNuit()"></button>
 		</div>
 		<h1>MARCHÉ DE NOËL</h1>
-		<div class="produits" id="liste_produits_2">
+		<div class="produits" id="liste_produits">
 		</div>
 		<div class="panier">
 			<h2>Panier</h2>
 			<div id="panier">
 			</div>
 			<h3>Total : <span id="total">0.00</span> €</h3>
+			<div class="paiement_selection">
+				<label>
+					<input type="radio" name="moyen_de_paiement" value="Espèces" checked><span>Espèces</span>
+				</label>
+				<label>
+					<input type="radio" name="moyen_de_paiement" value="CB"><span>CB</span>
+				</label>
+				<label>
+					<input type="radio" name="moyen_de_paiement" value="Chèque"><span>Chèque</span>
+				</label>
+			</div>
 			<button onclick="ouvrirPopupRendreMonnaie()" style="background:#9c27b0;color:white;">Rendre la monnaie</button>
 			<button onclick="validerPanier()" style="background:#4caf50;color:white;">Valider le panier</button>
 			<button onclick="ouvrirPopupViderPanier()" style="background:#d9534f;color:white;">Vider le panier</button>
@@ -85,6 +96,11 @@
 			<h2>Récapitulatif des ventes</h2>
 			<div id="recapitulatifProduits"></div>
 			<h3>Total encaissé : <span id="totalCumule">0</span> €</h3>
+			<div>
+				Espèces : <span id="total_especes">0.00 €</span><br />
+				CB : <span id="total_cb">0.00 €</span><br />
+				Chèque : <span id="total_cheque">0.00 €</span>
+			</div>
 			<button onclick="exporterRapport()" style="background:#1565C0;color:white;">Télécharger le rapport</button>
 		</div>
 		<script src="script.js"></script>

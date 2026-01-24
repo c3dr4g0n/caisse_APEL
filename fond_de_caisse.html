@@ -89,7 +89,18 @@
 			</div>
 		</div>
 		<div class="fond_de_caisse_recette">
-			<div class="total" id="recette">Recette : 0 €</div>
+			<div class="carte" style="margin-top:20px;">
+				<div class="total" id="total_especes">Total Espèces : 0 €</div>
+				<div class="fond_de_caisse_ligne">
+					<label for="total_CB">Total CB :</label>
+					<input type="number" inputmode="decimal" step="0.01" id="total_CB" value="0" style="width:100px;">
+				</div>
+				<div class="fond_de_caisse_ligne">
+					<label for="total_cheques">Total Chèques :</label>
+					<input type="number" inputmode="decimal" step="0.01" id="total_cheques" value="0" style="width:100px;">
+				</div>
+				<div class="total" id="recette" style="background:#d4edda; margin-top:10px;">Recette : 0 €</div>
+			</div>
 		</div>
 		<div class="fond_de_caisse_boutons">
 			<button onclick="ouvrirPopupViderFondDeCaisse()" style="background:#d9534f;color:white;">Remettre à zéro</button>
@@ -108,8 +119,10 @@
 		<script src="script.js"></script>
 		<script>
 			// Les fonds de caisse
-			let fond_de_caisse_debut = JSON.parse(localStorage.getItem('fond_de_caisse_debut') || '[]');
-			let fond_de_caisse_fin = JSON.parse(localStorage.getItem('fond_de_caisse_fin') || '[]');
+			let fond_de_caisse_debut = JSON.parse(localStorage.getItem('fond_de_caisse_debut') || '{}');
+			let fond_de_caisse_fin = JSON.parse(localStorage.getItem('fond_de_caisse_fin') || '{}');
+			document.getElementById('total_CB').value = localStorage.getItem('fond_de_caisse_CB') || 0;
+			document.getElementById('total_cheques').value = localStorage.getItem('fond_de_caisse_cheques') || 0;
 			
 			// Les différents billets et pièces possibles
 			const VALEURS = {
@@ -141,7 +154,7 @@
 					const valeur_initiale = (id_caisse === 'fond_de_caisse_debut') ? fond_de_caisse_debut[id] || 0 : fond_de_caisse_fin[id] || 0;
 					const div_input = document.createElement("div");
 					div_input.className = "fond_de_caisse_ligne"
-					div_input.innerHTML = `${valeur}€ : <input type="number" min="0" id="${id_caisse}_${id}" value="${valeur_initiale}">`;
+					div_input.innerHTML = `${valeur}€ : <input type="number" inputmode="numeric" min="0" id="${id_caisse}_${id}" value="${valeur_initiale}">`;
 					
 					div.appendChild(div_input);
 				});
@@ -167,16 +180,21 @@
 			}
 			
 			function calculeRecette(){
-				let total = 0;
+				let total_especes = 0;
 				
 				for (const id in VALEURS){
 					const input_debut = document.getElementById("fond_de_caisse_debut_" + id);
 					const input_fin = document.getElementById("fond_de_caisse_fin_" + id);
-					if (input_debut) total -= (parseInt(input_debut.value) || 0) * VALEURS[id];
-					if (input_fin) total += (parseInt(input_fin.value) || 0) * VALEURS[id];
+					if (input_debut) total_especes -= (parseInt(input_debut.value) || 0) * VALEURS[id];
+					if (input_fin) total_especes += (parseInt(input_fin.value) || 0) * VALEURS[id];
 				}
 				
-				document.getElementById("recette").innerText = "Recette : " + total.toFixed(2) + " €";
+				const total_CB = parseFloat(document.getElementById("total_CB").value) || 0;
+				const total_cheques = parseFloat(document.getElementById("total_cheques").value) || 0;
+				const recette = total_especes + total_CB + total_cheques;
+				
+				document.getElementById("total_especes").innerText = "Total Espèces : " + total_especes.toFixed(2) + " €";
+				document.getElementById("recette").innerText = "Recette : " + recette.toFixed(2) + " €";
 			}
 			
 			function sauvegarderFondDeCaisse(){
@@ -190,6 +208,8 @@
 				
 				localStorage.setItem('fond_de_caisse_debut', JSON.stringify(debut));
 				localStorage.setItem('fond_de_caisse_fin', JSON.stringify(fin));
+				localStorage.setItem('fond_de_caisse_CB', document.getElementById('total_CB').value || 0);
+				localStorage.setItem('fond_de_caisse_cheques', document.getElementById('total_cheques').value || 0);
 			}
 			
 			function miseAJourAutomatiqueFondDeCaisse(){
@@ -246,12 +266,18 @@
 					total_fin += (fin * valeur);
 				});
 				
-				const chaine_total_debut = total_debut.toString().replace('.', ',');
-				const chaine_total_fin = total_fin.toString().replace('.', ',');
+				csv += `;Total;${total_debut.toFixed(2).toString().replace('.', ',')};${total_fin.toFixed(2).toString().replace('.', ',')}`;
 				
-				csv += `TOTAL;;${chaine_total_debut};${chaine_total_fin}`;
+                const total_especes = total_fin - total_debut;
+				const total_CB = parseFloat(document.getElementById("total_CB").value) || 0;
+				const total_cheques = parseFloat(document.getElementById("total_cheques").value) || 0;
 				
-				telechargerCSV("fond_de_caisse", csv);
+                csv += `\n\nTOTAL ESPECES;;;${total_especes.toFixed(2).replace('.', ',')}\n`;
+                csv += `TOTAL CB (Up2Play);;;${total_CB.toFixed(2).replace('.', ',')}\n`;
+                csv += `TOTAL CHÈQUES;;;${total_cheques.toFixed(2).replace('.', ',')}\n`;
+                csv += `RECETTE;;;${(total_especes + total_CB + total_cheques).toFixed(2).replace('.', ',')}`;
+				
+				partagerCSV('Fond de Caisse APEL', 'Voici le récapitulatif du fond de caisse (CSV).', 'fond_de_caisse', csv);
 			}
 		</script>
 	</body>

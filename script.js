@@ -1,13 +1,22 @@
 // Mode nuit
 document.addEventListener("DOMContentLoaded", () => {
-    const bouton = document.getElementById("bouton_mode_nuit");
-    if (!bouton) return;
-
-    if (localStorage.getItem("modeNuit") === "true") {
-        bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode jour</span><span class="bouton_mode_nuit_icone">&#9728;</span>';
-        document.body.classList.add("mode_nuit");
-    } else {
-        bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
+	const bouton = document.getElementById("bouton_mode_nuit");
+	const estModeNuit = localStorage.getItem("modeNuit") === "true";
+	
+	if(estModeNuit){
+		document.body.classList.add("mode_nuit");
+		if(bouton){
+			bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode jour</span><span class="bouton_mode_nuit_icone">&#9728;</span>';
+		}
+	}else{
+		document.body.classList.remove("mode_nuit");
+		if(bouton){
+			bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
+		}
+	}
+	
+	if (typeof rafraichirStylePaiement === "function"){
+        rafraichirStylePaiement();
     }
 });
 
@@ -27,16 +36,20 @@ function changerModeJourNuit(){
 	else{
 		bouton.innerHTML = '<span class="bouton_mode_nuit_texte">Mode nuit</span><span class="bouton_mode_nuit_icone">&#9789;</span>';
 	}
+	
+	if (typeof rafraichirStylePaiement === "function"){
+        rafraichirStylePaiement();
+    }
 }
 
 // Télécharger les fichiers CSV
 function telechargerCSV(nomFichier, contenuFichier){
 	const BOM = "\uFEFF";
-	const blob = new Blob([BOM + contenuFichier], { type: "text/csv;charset=utf-8;" });
+	const blob = new Blob([BOM + contenuFichier], {type : "text/csv;charset=utf-8;"});
 	const url = URL.createObjectURL(blob);
 	
-	date = new Date().toLocaleDateString('fr-FR'),
-	heure = new Date().toLocaleTimeString('fr-FR')
+	const date = new Date().toLocaleDateString('fr-FR').replace(/\//g, '_');
+	const heure = new Date().toLocaleTimeString('fr-FR').replace(/:/g, '_');
 	
 	const a = document.createElement("a");
 	a.href = url;
@@ -44,4 +57,29 @@ function telechargerCSV(nomFichier, contenuFichier){
 	a.click();
 	
 	URL.revokeObjectURL(url);
+}
+
+// Partager les fichiers CSV
+async function partagerCSV(titreFichier, descriptifFichier, nomFichier, contenuFichier){
+	const BOM = "\uFEFF";
+	const date = new Date().toLocaleDateString('fr-FR').replace(/\//g, '_');
+	const heure = new Date().toLocaleTimeString('fr-FR').replace(/:/g, '_');
+	const nomFichierComplet = `${nomFichier}_${date}_${heure}.csv`;
+	const blob = new Blob([BOM + contenuFichier], {type : 'text/csv;charset=utf-8;'});
+	const fichier = new File([blob], nomFichierComplet, {type : 'text/csv'});
+	
+	if(navigator.canShare && navigator.canShare({files : [fichier]})){
+		try{
+			await navigator.share({
+				files : [fichier],
+				title : titreFichier,
+				text : descriptifFichier
+			});
+		}catch(erreur){
+			console.log("Erreur de partage :", erreur);
+			telechargerCSV(nomFichier, contenuFichier);
+		}
+	}else{
+		telechargerCSV(nomFichier, contenuFichier);
+	}
 }

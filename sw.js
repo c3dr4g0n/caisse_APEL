@@ -1,11 +1,13 @@
-const version_application = "1.2.1";
+const version_application = "2.0.0";
 const version_cache = `caisse-APEL-version-${version_application}`;
 
 const urls_pour_cache = [
 	"./",
 	"./index.html",
+	"./marche_de_noel.html",
 	"./caisse_alimentation.html",
 	"./caisse_marche_de_noel.html",
+	"./caisse_fete_de_saint_paul.html",
 	"./fond_de_caisse.html",
 	"./style.css",
 	"./script.js",
@@ -13,23 +15,32 @@ const urls_pour_cache = [
 	"./manifest.json",
 	"./images/icone_192.png",
 	"./images/icone_512.png",
+	"./images/barbe_a_papa.png",
+	"./images/biere.png",
+	"./images/bonbon.png",
 	"./images/cafe.png",
 	"./images/chocolat_chaud.png",
-	"./images/the.png",
-	"./images/vin_chaud.png",
+	"./images/cidre.png",
 	"./images/crepe_caramel.png",
 	"./images/crepe_chocolat.png",
 	"./images/crepe_sucre.png",
+	"./images/eau.png",
 	"./images/gateau.png",
 	"./images/guimauve.png",
-	"./images/pate_de_fruits.png",
-	"./images/sable.png",
 	"./images/marche_de_noel_100.png",
 	"./images/marche_de_noel_200.png",
 	"./images/marche_de_noel_300.png",
 	"./images/marche_de_noel_400.png",
 	"./images/marche_de_noel_500.png",
-	"./images/marche_de_noel_600.png"
+	"./images/marche_de_noel_600.png",
+	"./images/pate_de_fruits.png",
+	"./images/sable.png",
+	"./images/soft.png",
+	"./images/the.png",
+	"./images/ticket_enveloppe.png",
+	"./images/ticket_jeux.png",
+	"./images/ticket_tombola.png",
+	"./images/vin_chaud.png"
 ];
 
 self.addEventListener("install", evenement => {
