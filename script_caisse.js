@@ -102,32 +102,20 @@ const produits_marche_de_Noel_marche = {
 
 // Fête de Saint Paul
 const produits_fete_de_Saint_Paul = {
-	"Bière" : {
-		prix : 3,
-		image : "biere.png"
-	},
-	"Cidre" : {
-		prix : 3,
-		image : "cidre.png"
-	},
 	"Café" : {
 		prix : 2,
 		image : "cafe.png"
 	},
 	"Eau" : {
-		prix : 1,
+		prix : 0.5,
 		image : "eau.png"
 	},
 	"Soft" : {
 		prix : 2,
 		image : "soft.png"
 	},
-	"Barbe à papa" : {
-		prix : 100,
-		image : "barbe_a_papa.png"
-	},
 	"Bonbon" : {
-		prix : 1.5,
+		prix : 2,
 		image : "bonbon.png"
 	},
 	"Crêpe caramel" : {
@@ -147,16 +135,20 @@ const produits_fete_de_Saint_Paul = {
 		image : "gateau.png"
 	},
 	"Ticket enveloppe" : {
-		prix : 100,
+		prix : 2,
 		image : "ticket_enveloppe.png"
 	},
 	"Ticket de jeux" : {
-		prix : 100,
+		prix : 2,
 		image : "ticket_jeux.png"
 	},
-	"Ticket de tombola" : {
-		prix : 2,
-		image : "ticket_tombola.png"
+	"Ticket de jeux x12" : {
+		prix : 20,
+		image : "ticket_jeux.png"
+	},
+	"Ticket de jeux x25" : {
+		prix : 40,
+		image : "ticket_jeux.png"
 	}
 };
 
