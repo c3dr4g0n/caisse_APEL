@@ -138,6 +138,10 @@ const produits_fete_de_Saint_Paul = {
 		prix : 2,
 		image : "ticket_enveloppe.png"
 	},
+	"Ticket fil rouge" : {
+		prix : 2,
+		image : "ticket_fil_rouge.png"
+	},
 	"Ticket de jeux" : {
 		prix : 2,
 		image : "ticket_jeux.png"
