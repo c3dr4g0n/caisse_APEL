@@ -134,6 +134,10 @@ const produits_fete_de_Saint_Paul = {
 		prix : 1,
 		image : "gateau.png"
 	},
+	"Formule galette + crêpe" : {
+		prix : 12,
+		image : "formule_galette_crepe.png"
+	},
 	"Ticket enveloppe" : {
 		prix : 2,
 		image : "ticket_enveloppe.png"

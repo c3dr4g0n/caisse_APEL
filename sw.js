@@ -1,4 +1,4 @@
-const version_application = "2.0.2";
+const version_application = "2.0.3";
 const version_cache = `caisse-APEL-version-${version_application}`;
 
 const urls_pour_cache = [
@@ -25,6 +25,7 @@ const urls_pour_cache = [
 	"./images/crepe_chocolat.png",
 	"./images/crepe_sucre.png",
 	"./images/eau.png",
+	"./images/formule_galette_crepe.png",
 	"./images/gateau.png",
 	"./images/guimauve.png",
 	"./images/marche_de_noel_100.png",
