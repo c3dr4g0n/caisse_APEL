@@ -114,6 +114,10 @@ const produits_fete_de_Saint_Paul = {
 		prix : 2,
 		image : "soft.png"
 	},
+	"Barbe à papa" : {
+		prix : 2,
+		image : "barbe_a_papa.png"
+	},
 	"Bonbon" : {
 		prix : 2,
 		image : "bonbon.png"

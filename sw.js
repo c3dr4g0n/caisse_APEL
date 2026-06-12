@@ -1,4 +1,4 @@
-const version_application = "2.0.3";
+const version_application = "2.0.4";
 const version_cache = `caisse-APEL-version-${version_application}`;
 
 const urls_pour_cache = [
